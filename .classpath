@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/opencv/build/java/x64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Desktop/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Desktop/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Desktop/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Desktop/sqljdbc42.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/opencv/javacpp-1.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/opencv/opencv-3.4.1-1.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/core-3.3.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/core-3.3.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/core-3.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/jai-imageio-core-1.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/javase-3.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Documents/Zalo Received Files/zxing/jcommander-1.82.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Desktop/poi-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/commons-codec-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/SparseBitSet-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/jar_files (3)/log4j-api-2.21.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/jar_files (3)/poi-ooxml-lite-5.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ngoph/Downloads/jar_files (3)/xmlbeans-5.2.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
