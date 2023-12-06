@@ -830,7 +830,7 @@ private JTable tableluongnhanvien;
 //		nút lưu nhân viên
 		themqlnv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//aa
 				
 				
 				if(checkRegexNhanVien()) {
