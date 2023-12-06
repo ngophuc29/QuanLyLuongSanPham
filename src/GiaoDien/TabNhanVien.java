@@ -686,6 +686,7 @@ private JTable tableluongnhanvien;
 //		nút thêm nhân viên
 		FixButton fxbtnThm = new FixButton("Thêm");
 		
+		//seticon
 		fxbtnThm.setIcon(new ImageIcon(TabNhanVien.class.getResource("/image/add (1).png")));
 		fxbtnThm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
