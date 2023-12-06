@@ -750,7 +750,7 @@ private JTable tableluongnhanvien;
 		panel_2.add(fxbtnThm);
 		
 		
-		model= new DefaultTableModel();
+		model= new DefaultTableModel(); 
 		model.addColumn("STT");
 		model.addColumn("Mã NV");
 		model.addColumn("Họ Tên ");
