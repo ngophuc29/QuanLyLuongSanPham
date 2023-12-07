@@ -274,7 +274,6 @@ public class TabSanPham extends JPanel {
 				int column = 1; // Chỉ mục của cột bạn muốn lấy giá trị
 
 				if (lastRow >= 0) {
-					
 				    Object value = modelquanlysanpham.getValueAt(lastRow, column); // Lấy giá trị ở dòng cuối cùng của cột cụ thể
 
 				    if (value != null) {
@@ -352,6 +351,7 @@ public class TabSanPham extends JPanel {
 				String ma = masp.getText().toString();
 				String ten  = tensp.getText().toString();
 				double gia  = Double.parseDouble(giasp.getText().toString()) ;
+				
 				 
 				String kieudang = cbokieudang.getSelectedItem().toString();
  ;
