@@ -1098,7 +1098,7 @@ table.addMouseListener(new MouseListener() {
 		});
 
 
-
+	// tim theo chuc vu
 		timtheochucvu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		
@@ -1129,7 +1129,7 @@ table.addMouseListener(new MouseListener() {
 			 
 		});
 
-		
+		//tim theo ten nhan vien
 		timtheoten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		

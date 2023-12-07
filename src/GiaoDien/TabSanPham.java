@@ -483,10 +483,16 @@ table.addMouseListener(new MouseListener() {
 		huyqlnvbtn.setBounds(1108, 42, 150, 40);
 		panel_2.add(huyqlnvbtn);
 		
-		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.setIcon(new ImageIcon(TabSanPham.class.getResource("/image/search.png")));
-		btnNewButton_2.setBounds(229, 32, 57, 40);
-		panel_2.add(btnNewButton_2);
+		
+//		nut tim san pham
+		JButton timspbtn = new JButton("");
+		timspbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		timspbtn.setIcon(new ImageIcon(TabSanPham.class.getResource("/image/search.png")));
+		timspbtn.setBounds(229, 32, 57, 40);
+		panel_2.add(timspbtn);
 		
 
 //		nvdao = new nhanVienDAO();

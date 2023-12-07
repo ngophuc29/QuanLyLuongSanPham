@@ -524,6 +524,10 @@ public class TabCongNhan extends JPanel  {
 		panel_2.add(huyqlcnbtn);
 		
 		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton_1.setBackground(new Color(97, 218, 193));
 		btnNewButton_1.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
 		btnNewButton_1.setBounds(276, 40, 57, 40);
