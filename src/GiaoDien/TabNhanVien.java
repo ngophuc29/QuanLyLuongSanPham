@@ -739,7 +739,6 @@ private JTable tableluongnhanvien;
 		
 //		nút hủy
 		huyqlnvbtn.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				fxbtnThm.setEnabled(true);
 				themqlnv.setEnabled(false);
@@ -1109,7 +1108,6 @@ table.addMouseListener(new MouseListener() {
 				 List<NhanVien> timtheochucvu=nvdao.getAllnhanvienTheoChucVu(cbotimchucvu.getSelectedItem().toString());
 					int i=1;
 					model.getDataVector().removeAllElements();
-					 
 					 
 					for (NhanVien nv : timtheochucvu) {
 						Object []obj= {i,nv.getMaNV(),nv.getTenNV(),nv.getNgaybatdaulamViec(),nv.getChucVu(),nv.getSodienthoai(),nv.getDiachi(),nv.getEmail(),nv.getHeSoLuong(),nv.getTroCap(),nv.getTrangthai(),nv.getBhxh(),nv.getTrinhdo(),nv.getNgaySinh(),nv.getHinhanhnhanvien(),nv.getCmnd()};
