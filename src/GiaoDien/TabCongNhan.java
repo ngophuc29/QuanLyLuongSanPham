@@ -388,6 +388,7 @@ public class TabCongNhan extends JPanel  {
 		FixButton themqlcnBtn = new FixButton("Thêm");
 		themqlcnBtn.setEnabled(false);
 		themqlcnBtn.setText("Lưu");
+		
 		themqlcnBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -531,7 +532,6 @@ public class TabCongNhan extends JPanel  {
 		
 //		nút thêm công nhân
 		FixButton fxbtnThm = new FixButton("Thêm");
-		
 		fxbtnThm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				themqlcnBtn.setEnabled(true);
