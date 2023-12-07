@@ -393,7 +393,6 @@ private JTable tableluongnhanvien;
 		lammoiqlnvBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
 				nvdao = new nhanVienDAO();
 				model.getDataVector().removeAllElements();
 				int i=1;
@@ -463,7 +462,7 @@ private JTable tableluongnhanvien;
 								String maNV = manv.getText().toString();
 								String tenNV = tennv.getText().toString();
 								String sdt = sdtnv.getText().toString();
-								 
+							
 								String diachi = diachinv.getText().toString();
 //								String chucvu = txtchucvuu.getText().toString();
 								
@@ -686,6 +685,7 @@ private JTable tableluongnhanvien;
 //		nút thêm nhân viên
 		FixButton fxbtnThm = new FixButton("Thêm");
 		
+		//seticon
 		fxbtnThm.setIcon(new ImageIcon(TabNhanVien.class.getResource("/image/add (1).png")));
 		fxbtnThm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -829,7 +829,7 @@ private JTable tableluongnhanvien;
 //		nút lưu nhân viên
 		themqlnv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//aa
 				
 				
 				if(checkRegexNhanVien()) {
@@ -1107,7 +1107,6 @@ table.addMouseListener(new MouseListener() {
 				 List<NhanVien> timtheochucvu=nvdao.getAllnhanvienTheoChucVu(cbotimchucvu.getSelectedItem().toString());
 					int i=1;
 					model.getDataVector().removeAllElements();
-					 
 					 
 					for (NhanVien nv : timtheochucvu) {
 						Object []obj= {i,nv.getMaNV(),nv.getTenNV(),nv.getNgaybatdaulamViec(),nv.getChucVu(),nv.getSodienthoai(),nv.getDiachi(),nv.getEmail(),nv.getHeSoLuong(),nv.getTroCap(),nv.getTrangthai(),nv.getBhxh(),nv.getTrinhdo(),nv.getNgaySinh(),nv.getHinhanhnhanvien(),nv.getCmnd()};
