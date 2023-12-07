@@ -460,10 +460,11 @@ private JTable tableluongnhanvien;
 				int row=table.getSelectedRow();
 							
 							if(row>=0) {
+								
 								String maNV = manv.getText().toString();
 								String tenNV = tennv.getText().toString();
 								String sdt = sdtnv.getText().toString();
-								 
+							
 								String diachi = diachinv.getText().toString();
 //								String chucvu = txtchucvuu.getText().toString();
 								
