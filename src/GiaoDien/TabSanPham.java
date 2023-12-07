@@ -274,6 +274,7 @@ public class TabSanPham extends JPanel {
 				int column = 1; // Chỉ mục của cột bạn muốn lấy giá trị
 
 				if (lastRow >= 0) {
+					
 				    Object value = modelquanlysanpham.getValueAt(lastRow, column); // Lấy giá trị ở dòng cuối cùng của cột cụ thể
 
 				    if (value != null) {
