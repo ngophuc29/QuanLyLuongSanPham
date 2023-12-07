@@ -560,7 +560,6 @@ public class TabCongNhan extends JPanel  {
 //		nút hủy công nhân
 		huyqlcnbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				fxbtnThm.setEnabled(true);
 				themqlcnBtn.setEnabled(false);
 				suaqlcnbtn.setEnabled(true);
