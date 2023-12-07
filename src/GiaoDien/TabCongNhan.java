@@ -388,7 +388,6 @@ public class TabCongNhan extends JPanel  {
 		FixButton themqlcnBtn = new FixButton("Thêm");
 		themqlcnBtn.setEnabled(false);
 		themqlcnBtn.setText("Lưu");
-		
 		themqlcnBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -506,6 +505,7 @@ public class TabCongNhan extends JPanel  {
 		suaqlcnbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
+			
 		});
 		suaqlcnbtn.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/edit (1).png")));
 		suaqlcnbtn.setFont(new Font("Tahoma", Font.BOLD, 14));
