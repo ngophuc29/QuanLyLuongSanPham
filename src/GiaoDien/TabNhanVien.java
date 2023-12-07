@@ -393,7 +393,6 @@ private JTable tableluongnhanvien;
 		lammoiqlnvBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
 				nvdao = new nhanVienDAO();
 				model.getDataVector().removeAllElements();
 				int i=1;
