@@ -351,7 +351,6 @@ public class TabSanPham extends JPanel {
 				String ma = masp.getText().toString();
 				String ten  = tensp.getText().toString();
 				double gia  = Double.parseDouble(giasp.getText().toString()) ;
-				
 				 
 				String kieudang = cbokieudang.getSelectedItem().toString();
  ;
