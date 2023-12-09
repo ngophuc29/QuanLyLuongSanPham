@@ -1547,6 +1547,9 @@ table.addMouseListener(new MouseListener() {
 //			 
 //		});
 		
+		
+		
+		
 		ListSelectionModel selectionModelCDPC = tablesppc.getSelectionModel();
 
 		selectionModelCDPC.addListSelectionListener(new ListSelectionListener() {
