@@ -1732,6 +1732,8 @@ table.addMouseListener(new MouseListener() {
 		});
 		 
 		//
+		
+		
 		btnphancongcongdoan.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  
