@@ -721,7 +721,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 		modeldsanphamchamcong.addColumn("Tên SP ");
 		 
 		
-//		load table công nhân
+//		load table sản phẩm 
 		tablesanphamchamcong = new JTable(modeldsanphamchamcong);
 		scrollPaneDSSP.setViewportView(tablesanphamchamcong);
 		//load sản phẩm
@@ -743,6 +743,10 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 		JScrollPane scrollpanDSCD = new JScrollPane();
 		scrollpanDSCD.setBounds(801, 81, 476, 128);
 		panel_3.add(scrollpanDSCD);
+		
+	
+		
+		//load bảng sản phẩm và tạo sự kiện bấm vào sảm phẩm nào là hiện công đoạn đang sản xuất ở sản phẩm đó
 		
 		modeldcongdoanchamcong=new DefaultTableModel();
 		modeldcongdoanchamcong.addColumn("Ma Cong Doan");
