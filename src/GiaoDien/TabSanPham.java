@@ -1802,8 +1802,7 @@ table.addMouseListener(new MouseListener() {
  			}
  		});
 		 
-		 
-		 
+		//các nút phân loại phân công 
 		 
 		 JRadioButton filtertatcaPhanCong = new JRadioButton("Tất cả");
 			filtertatcaPhanCong.addActionListener(new ActionListener() {
@@ -1854,7 +1853,7 @@ table.addMouseListener(new MouseListener() {
 			         		}
 			         		tabledspc.setModel(modeldscongnhanphancong);
 			         		
- 			 
+			 
 			         		
 			         		int rowCount = modeldscongnhanphancong.getRowCount();
 							System.out.println("so dong loc bang :"+rowCount+"");
@@ -2058,7 +2057,9 @@ table.addMouseListener(new MouseListener() {
 				
 					
 				}
-			});
+			}); 
+		 
+		
 			filterchuaphancong.setBounds(1159, 322, 115, 23);
 			panel_4.add(filterchuaphancong);
 			
