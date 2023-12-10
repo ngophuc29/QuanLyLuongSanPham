@@ -899,16 +899,19 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	       centerRenderer.setHorizontalAlignment(JLabel.CENTER); // Đặt căn giữa cho nội dung cột
 
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 0).setCellRenderer(centerRenderer); // Áp dụng trình điều khiển tùy chỉnh cho cột thứ columnIndex
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 1).setCellRenderer(centerRenderer);
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 2).setCellRenderer(centerRenderer);
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 3).setCellRenderer(centerRenderer);
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 4).setCellRenderer(centerRenderer);
-	       tabledscongnhanChamCong.getColumnModel().getColumn( 5).setCellRenderer(centerRenderer);
+	       tabledscongnhanChamCong.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // Áp dụng trình điều khiển tùy chỉnh cho cột thứ columnIndex
+	       tabledscongnhanChamCong.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+	       tabledscongnhanChamCong.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+	       tabledscongnhanChamCong.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+	       tabledscongnhanChamCong.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+	       tabledscongnhanChamCong.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 		
+	       
+	       
 		//-load bảng chấm công công nhân theo mã công đoạn đã chọn
 		ListSelectionModel selectionModelDSPC = tablecongdoanchamcong.getSelectionModel();
-
+		
+		
 		selectionModelDSPC.addListSelectionListener(new ListSelectionListener() {
 		    public void valueChanged(ListSelectionEvent e) {
 		        if (!e.getValueIsAdjusting()) {
@@ -917,7 +920,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 		            if (selectedRow != -1) {
 		    
 		            	modeldDSCongNhanChamCong.getDataVector().removeAllElements();
-		         		LocalDate currentDate = LocalDate.now();
+		         		LocalDate currentDate =  LocalDate.now();
 		         		
 		         		
 		         		for (ChamCongCongNhan cccn : cccndao.getDSChamCongCongDoan(modeldcongdoanchamcong.getValueAt(selectedRow,  0).toString(),modeldcongdoanchamcong.getValueAt(selectedRow,  3).toString())) {
@@ -1056,6 +1059,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
  
 
 	
+		
 		
 		
 		
@@ -1202,6 +1206,8 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 
 			}
 		});
+		
+		
 		btnchamCongCongNhan.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/Flat_tick_icon.svg.png")));
 		btnchamCongCongNhan.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnchamCongCongNhan.setBackground(new Color(69, 129, 142));
