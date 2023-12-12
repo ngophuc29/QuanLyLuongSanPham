@@ -1269,178 +1269,180 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 	        // Đặt giá trị mặc định cho `JComboBox` là năm hiện tại
 		 namLuongCongNhan.addItem(String.valueOf(namHienTai));
 		
-		FixButton locluongCongnhan = new FixButton("Lọc");
 		
-		locluongCongnhan.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
-		locluongCongnhan.setForeground(Color.WHITE);
-		locluongCongnhan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		locluongCongnhan.setBackground(new Color(69, 129, 142));
-		locluongCongnhan.setBounds(539, 623, 206, 55);
-		panel_4.add(locluongCongnhan);
-		
-		FixButton lammoiLuongCongNhan = new FixButton("Làm Mới");
-		lammoiLuongCongNhan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				LocalDate currentDate = LocalDate.now();
-		        int nam = currentDate.getYear();
-		        int thang = currentDate.getMonthValue();
-				 
-				  List<BangLuongCongNhan> locbangluong=blcndao.getchamcongtheongay(thang,nam);
-					int i=1;
-					modelbangluongCongNhan.getDataVector().removeAllElements();
-					for (BangLuongCongNhan cn : locbangluong) {
-						String luongtangca = String.format("%.0f", cn.getLuongtangca());
-						String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
-						String tongluong = String.format("%.0f", cn.getTongluong());
-						Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
-						i++;
-						modelbangluongCongNhan.addRow(obj);
-						
-						
-					}
-					tableBangLuongCongNhan.setModel(modelbangluongCongNhan);
-					
-				System.out.println("e loc ne");
-				System.out.println(thang+"");
-				System.out.println(nam+"");
-				int rowCount = modelbangluongCongNhan.getRowCount();
-				System.out.println("so dong loc bang :"+rowCount+"");
-				if(rowCount==0) {
-					modelbangluongCongNhan.getDataVector().removeAllElements();
-					 Object []obj= {"","","","","","","",""};
-					 
-					 modelbangluongCongNhan.addRow(obj);
-					if (modelbangluongCongNhan.getRowCount() > 0) {
-						modelbangluongCongNhan.removeRow(0);
-					}
-					JOptionPane.showMessageDialog(null, "Error: Chưa có dữ liệu của bảng lương vào thời gian này ");
-				}
-			}
-		});
-		lammoiLuongCongNhan.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/reload (1).png")));
-		lammoiLuongCongNhan.setForeground(Color.WHITE);
-		lammoiLuongCongNhan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lammoiLuongCongNhan.setBackground(new Color(0, 158, 15));
-		lammoiLuongCongNhan.setBounds(856, 623, 206, 55);
-		panel_4.add(lammoiLuongCongNhan);
-		
-		JScrollPane scrollPanebangLuongcongNhan = new JScrollPane();
-		scrollPanebangLuongcongNhan.setBounds(10, 108, 1302, 449);
-		panel_4.add(scrollPanebangLuongcongNhan);
-		
-		modelbangluongCongNhan= new DefaultTableModel();
-		modelbangluongCongNhan.addColumn("Mã Lương");
-		modelbangluongCongNhan.addColumn("Mã CN ");
- 
-		modelbangluongCongNhan.addColumn("Số giờ tăng ca");
-//		modelbangluongCongNhan.addColumn("Lương Cơ Bản");
-		modelbangluongCongNhan.addColumn("Lương tăng ca");
-		modelbangluongCongNhan.addColumn("Lương Sản Phẩm");
-		modelbangluongCongNhan.addColumn("Phụ Cấp");
-		modelbangluongCongNhan.addColumn("Tiền Phạt");
-		modelbangluongCongNhan.addColumn("Tổng Lương Tháng");
-		
-		tableBangLuongCongNhan = new JTable(modelbangluongCongNhan);
-		scrollPanebangLuongcongNhan.setViewportView(tableBangLuongCongNhan);
-		
-//		lọc lương công nhân
-		locluongCongnhan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int thang =Integer.parseInt((String) thangLuongCongNhan.getSelectedItem());
-				int nam =Integer.parseInt((String) namLuongCongNhan.getSelectedItem());
-				  List<BangLuongCongNhan> locbangluong=blcndao.getchamcongtheongay(thang,nam);
-					int i=1;
-					modelbangluongCongNhan.getDataVector().removeAllElements();
-					for (BangLuongCongNhan cn : locbangluong) {
-						
-						
-						String luongtangca = String.format("%.0f", cn.getLuongtangca());
-						String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
-						String tongluong = String.format("%.0f", cn.getTongluong());
-						Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
-						i++;
-						modelbangluongCongNhan.addRow(obj);
-						
-						
-					}
-					tableBangLuongCongNhan.setModel(modelbangluongCongNhan);
-					
-				System.out.println("e loc ne");
-				System.out.println(thang+"");
-				System.out.println(nam+"");
-				int rowCount = modelbangluongCongNhan.getRowCount();
-				System.out.println("so dong loc bang :"+rowCount+"");
-				if(rowCount==0) {
-					modelbangluongCongNhan.getDataVector().removeAllElements();
-					 Object []obj= {"","","","","","","",""};
-					 
-					 modelbangluongCongNhan.addRow(obj);
-					if (modelbangluongCongNhan.getRowCount() > 0) {
-						modelbangluongCongNhan.removeRow(0);
-					}
-					
-					JOptionPane.showMessageDialog(null, "Error: Chưa có dữ liệu của bảng lương vào thời gian này ");
-				}
-			}
-		});
-		
-		JLabel lblNewLabel_4_1 = new JLabel("Tìm kiếm theo tên:");
-		lblNewLabel_4_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_4_1.setBounds(22, 606, 222, 20);
-		panel_4.add(lblNewLabel_4_1);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(20, 637, 191, 24);
-		panel_4.add(textField_7);
-		
-		JButton btnNewButton_2_1 = new JButton("");
-		btnNewButton_2_1.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
-		btnNewButton_2_1.setBounds(241, 625, 57, 40);
-		panel_4.add(btnNewButton_2_1);
-		
-		FixButton fxbtnTnhLng = new FixButton("Lọc");
-		
-		fxbtnTnhLng.setText("Tính Lương");
-		fxbtnTnhLng.setForeground(Color.WHITE);
-		fxbtnTnhLng.setFont(new Font("Tahoma", Font.BOLD, 14));
-		fxbtnTnhLng.setBackground(new Color(69, 129, 142));
-		fxbtnTnhLng.setBounds(1106, 623, 206, 55);
-		panel_4.add(fxbtnTnhLng);
-		
-		FixButton fxbtnInPdf = new FixButton("In");
-		fxbtnInPdf.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		fxbtnInPdf.setText("In PDF");
-		fxbtnInPdf.setForeground(Color.WHITE);
-		fxbtnInPdf.setFont(new Font("Tahoma", Font.BOLD, 14));
-		fxbtnInPdf.setBackground(new Color(69, 129, 142));
-		fxbtnInPdf.setBounds(1053, 25, 206, 55);
-		panel_4.add(fxbtnInPdf);
 		 
-		
-		
-		blcndao =  new BangLuongCongNhanDAO();	   
-		
-		//load bảng lương
-		int thangcombo =Integer.parseInt((String) thangLuongCongNhan.getSelectedItem());
-		int namcombo =Integer.parseInt((String) namLuongCongNhan.getSelectedItem());
-        List<BangLuongCongNhan> bangluog=blcndao.getchamcongtheongay(thangcombo,namcombo);
-		int i11=1;
-		for (BangLuongCongNhan cn : bangluog) {
-			String luongtangca = String.format("%.0f", cn.getLuongtangca());
-			String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
-			String tongluong = String.format("%.0f", cn.getTongluong());
-			Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
-			i11++;
-			modelbangluongCongNhan.addRow(obj);
+		 FixButton locluongCongnhan = new FixButton("Lọc");
+			
+			locluongCongnhan.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
+			locluongCongnhan.setForeground(Color.WHITE);
+			locluongCongnhan.setFont(new Font("Tahoma", Font.BOLD, 14));
+			locluongCongnhan.setBackground(new Color(69, 129, 142));
+			locluongCongnhan.setBounds(539, 623, 206, 55);
+			panel_4.add(locluongCongnhan);
+			
+			FixButton lammoiLuongCongNhan = new FixButton("Làm Mới");
+			lammoiLuongCongNhan.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					LocalDate currentDate = LocalDate.now();
+			        int nam = currentDate.getYear();
+			        int thang = currentDate.getMonthValue();
+					 
+					  List<BangLuongCongNhan> locbangluong=blcndao.getchamcongtheongay(thang,nam);
+						int i=1;
+						modelbangluongCongNhan.getDataVector().removeAllElements();
+						for (BangLuongCongNhan cn : locbangluong) {
+							String luongtangca = String.format("%.0f", cn.getLuongtangca());
+							String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
+							String tongluong = String.format("%.0f", cn.getTongluong());
+							Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
+							i++;
+							modelbangluongCongNhan.addRow(obj);
+							
+							
+						}
+						tableBangLuongCongNhan.setModel(modelbangluongCongNhan);
+						
+					System.out.println("e loc ne");
+					System.out.println(thang+"");
+					System.out.println(nam+"");
+					int rowCount = modelbangluongCongNhan.getRowCount();
+					System.out.println("so dong loc bang :"+rowCount+"");
+					if(rowCount==0) {
+						modelbangluongCongNhan.getDataVector().removeAllElements();
+						 Object []obj= {"","","","","","","",""};
+						 
+						 modelbangluongCongNhan.addRow(obj);
+						if (modelbangluongCongNhan.getRowCount() > 0) {
+							modelbangluongCongNhan.removeRow(0);
+						}
+						JOptionPane.showMessageDialog(null, "Error: Chưa có dữ liệu của bảng lương vào thời gian này ");
+					}
+				}
+			});
+			lammoiLuongCongNhan.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/reload (1).png")));
+			lammoiLuongCongNhan.setForeground(Color.WHITE);
+			lammoiLuongCongNhan.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lammoiLuongCongNhan.setBackground(new Color(0, 158, 15));
+			lammoiLuongCongNhan.setBounds(856, 623, 206, 55);
+			panel_4.add(lammoiLuongCongNhan);
+			
+			JScrollPane scrollPanebangLuongcongNhan = new JScrollPane();
+			scrollPanebangLuongcongNhan.setBounds(10, 108, 1302, 449);
+			panel_4.add(scrollPanebangLuongcongNhan);
+			
+			modelbangluongCongNhan= new DefaultTableModel();
+			modelbangluongCongNhan.addColumn("Mã Lương");
+			modelbangluongCongNhan.addColumn("Mã CN ");
+	 
+			modelbangluongCongNhan.addColumn("Số giờ tăng ca");
+//			modelbangluongCongNhan.addColumn("Lương Cơ Bản");
+			modelbangluongCongNhan.addColumn("Lương tăng ca");
+			modelbangluongCongNhan.addColumn("Lương Sản Phẩm");
+			modelbangluongCongNhan.addColumn("Phụ Cấp");
+			modelbangluongCongNhan.addColumn("Tiền Phạt");
+			modelbangluongCongNhan.addColumn("Tổng Lương Tháng");
+			
+			tableBangLuongCongNhan = new JTable(modelbangluongCongNhan);
+			scrollPanebangLuongcongNhan.setViewportView(tableBangLuongCongNhan);
+			
+//			lọc lương công nhân
+			locluongCongnhan.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					int thang =Integer.parseInt((String) thangLuongCongNhan.getSelectedItem());
+					int nam =Integer.parseInt((String) namLuongCongNhan.getSelectedItem());
+					  List<BangLuongCongNhan> locbangluong=blcndao.getchamcongtheongay(thang,nam);
+						int i=1;
+						modelbangluongCongNhan.getDataVector().removeAllElements();
+						for (BangLuongCongNhan cn : locbangluong) {
+							
+							
+							String luongtangca = String.format("%.0f", cn.getLuongtangca());
+							String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
+							String tongluong = String.format("%.0f", cn.getTongluong());
+							Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
+							i++;
+							modelbangluongCongNhan.addRow(obj);
+							
+							
+						}
+						tableBangLuongCongNhan.setModel(modelbangluongCongNhan);
+						
+					System.out.println("e loc ne");
+					System.out.println(thang+"");
+					System.out.println(nam+"");
+					int rowCount = modelbangluongCongNhan.getRowCount();
+					System.out.println("so dong loc bang :"+rowCount+"");
+					if(rowCount==0) {
+						modelbangluongCongNhan.getDataVector().removeAllElements();
+						 Object []obj= {"","","","","","","",""};
+						 
+						 modelbangluongCongNhan.addRow(obj);
+						if (modelbangluongCongNhan.getRowCount() > 0) {
+							modelbangluongCongNhan.removeRow(0);
+						}
+						
+						JOptionPane.showMessageDialog(null, "Error: Chưa có dữ liệu của bảng lương vào thời gian này ");
+					}
+				}
+			});
+			
+			JLabel lblNewLabel_4_1 = new JLabel("Tìm kiếm theo tên:");
+			lblNewLabel_4_1.setForeground(new Color(255, 255, 255));
+			lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			lblNewLabel_4_1.setBounds(22, 606, 222, 20);
+			panel_4.add(lblNewLabel_4_1);
+			
+			textField_7 = new JTextField();
+			textField_7.setColumns(10);
+			textField_7.setBounds(20, 637, 191, 24);
+			panel_4.add(textField_7);
+			
+			JButton btnNewButton_2_1 = new JButton("");
+			btnNewButton_2_1.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
+			btnNewButton_2_1.setBounds(241, 625, 57, 40);
+			panel_4.add(btnNewButton_2_1);
+			
+			FixButton fxbtnTnhLng = new FixButton("Lọc");
+			
+			fxbtnTnhLng.setText("Tính Lương");
+			fxbtnTnhLng.setForeground(Color.WHITE);
+			fxbtnTnhLng.setFont(new Font("Tahoma", Font.BOLD, 14));
+			fxbtnTnhLng.setBackground(new Color(69, 129, 142));
+			fxbtnTnhLng.setBounds(1106, 623, 206, 55);
+			panel_4.add(fxbtnTnhLng);
+			
+			FixButton fxbtnInPdf = new FixButton("In");
+			fxbtnInPdf.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			fxbtnInPdf.setText("In PDF");
+			fxbtnInPdf.setForeground(Color.WHITE);
+			fxbtnInPdf.setFont(new Font("Tahoma", Font.BOLD, 14));
+			fxbtnInPdf.setBackground(new Color(69, 129, 142));
+			fxbtnInPdf.setBounds(1053, 25, 206, 55);
+			panel_4.add(fxbtnInPdf);
+			 
 			
 			
-		}
+			blcndao =  new BangLuongCongNhanDAO();	   
+			
+			//load bảng lương
+			int thangcombo =Integer.parseInt((String) thangLuongCongNhan.getSelectedItem());
+			int namcombo =Integer.parseInt((String) namLuongCongNhan.getSelectedItem());
+	        List<BangLuongCongNhan> bangluog=blcndao.getchamcongtheongay(thangcombo,namcombo);
+			int i11=1;
+			for (BangLuongCongNhan cn : bangluog) {
+				String luongtangca = String.format("%.0f", cn.getLuongtangca());
+				String luongsanpham = String.format("%.0f", cn.getLuongsanpham());
+				String tongluong = String.format("%.0f", cn.getTongluong());
+				Object []obj= {cn.getMaBangLuongCongNhan(),cn.getMaCongNhan().getMaCongNhan(),cn.getTongsogiotangca(),luongtangca,luongsanpham,cn.getTroCap(),cn.getPhat(),tongluong };
+				i11++;
+				modelbangluongCongNhan.addRow(obj);
+				
+				
+			}
 		
  
 		
