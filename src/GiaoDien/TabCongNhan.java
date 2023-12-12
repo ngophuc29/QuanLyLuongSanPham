@@ -46,6 +46,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -110,7 +113,7 @@ public class TabCongNhan extends JPanel  {
 	private DefaultTableModel modelbangchamcongtheoma;
 	private JTable tabledscongnhanChamCong;
 	private JTable tableBangLuongCongNhan;
-	
+	private String madonhangdungdeupdate="";
 	private JDateChooser datengaysinhcn;
 	/**
 	 * Create the panel.
@@ -806,7 +809,11 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 //		            	tabledspc.clearSelection();
 //		            	modeldscongnhanphancong.getDataVector().removeAllElements();
 		            	
-		            	 List<CongDoanDonhang> loccongdoandonhang=cddhdao.getAllcongdoanDonHangtheosanpham(modeldsanphamchamcong.getValueAt(selectedRow,  1).toString());
+		            	
+		            	madonhangdungdeupdate=modeldsanphamchamcong.getValueAt(selectedRow,  1).toString();
+		            	
+		            	
+		            	 List<CongDoanDonhang> loccongdoandonhang=cddhdao.getAllcongdoanDonHangtheosanphamCo2MaSptrungnhau(modeldsanphamchamcong.getValueAt(selectedRow,  2).toString(),modeldsanphamchamcong.getValueAt(selectedRow,  1).toString());
 		            	 modeldcongdoanchamcong.getDataVector().removeAllElements();
 						for (CongDoanDonhang cd : loccongdoandonhang) {
 							String tt="";
@@ -822,7 +829,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 						tablecongdoanchamcong.setModel(modeldcongdoanchamcong);
 						
 						
-					 System.out.println("hello model cong doan"+	modeldcongdoanchamcong.getValueAt(selectedRow,  1).toString());
+					 System.out.println("hello model cong doan"+	modeldcongdoanchamcong.getValueAt(selectedRow,  2).toString());
 					 int rowCount = modeldcongdoanchamcong.getRowCount();
 						System.out.println("so dong loc bang :"+rowCount+"");
 						if(rowCount==0) {
@@ -1181,7 +1188,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 				     }
 			}	
 				     
-				     dhdao.updateHoanThanh(localDatengaycham,maCongDoanDonHang);
+				     dhdao.updateHoanThanh(localDatengaycham,maCongDoanDonHang,madonhangdungdeupdate);
 				     
 				     
 				     // load lại bảng lương sau khi chấm công
@@ -1514,13 +1521,16 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 	                	modelbangchamcongtheoma.addColumn("Số lượng hoàn thành");
 	            		modelbangchamcongtheoma.addColumn("Số giờ tăng ca");
 	            		modelbangchamcongtheoma.addColumn("Mã Công Đoạn");
-	            		modelbangchamcongtheoma.addColumn("Tiền Công");
+	            		modelbangchamcongtheoma.addColumn("Tổng Tiền Công");
 	                   JTable bangchamcongtheoma = new JTable(modelbangchamcongtheoma) {                     
 	                   };
 
 	                    
 	                    
 	                    // Kiểm tra nếu có dòng được chọn
+	                  
+	                   String ma="";
+	                   String ten ="";
 	                    if (selectedRow >= 0) {
  
 	                            modelbangluongCongNhan.getValueAt(selectedRow, 1).toString();
@@ -1536,17 +1546,134 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 	                				i1++;
 	                				 modelbangchamcongtheoma.addRow(newData);
 	                				 
-	                				
+	                					ma=cccn.getMaCongNhan().getMaCongNhan();
+		                				ten =cccn.getMaCongNhan().getTencongNhan();
 	                				 
 	                			}
 	                            
-    
+	                			bangchamcongtheoma.getColumnModel().getColumn(0).setMinWidth(0);
+	                			bangchamcongtheoma.getColumnModel().getColumn(0).setMaxWidth(0);
 	                            JScrollPane scroolchamcongtrongbangluong = new JScrollPane(bangchamcongtheoma);
+	                        
+	                     
+	                            JLabel hello = new JLabel("Bảng Lương Nhân Viên Chi Tiết");
+	                            JLabel manv = new JLabel("Mã Nhân viên: " + ma);
+	                            JLabel tennv = new JLabel("Tên Nhân Viên: " + ten);
+	                            JLabel thang1 = new JLabel("Tháng ");
+	                            JLabel nam1 = new JLabel("Năm");
+	                            JButton yourButton = new JButton("In PDF");
 
-	                            // Tạo JPanel để chứa JTable mới
-	                            JPanel newPanel = new JPanel();
-	                            newPanel.setLayout(new BorderLayout());
-	                            newPanel.add(scroolchamcongtrongbangluong, BorderLayout.CENTER);
+	                            JPanel newPanel = new JPanel(new GridBagLayout());
+	                            GridBagConstraints gbc = new GridBagConstraints();
+
+	                            // Đặt các thành phần vào vị trí tương ứng
+	                            gbc.gridx = 0;
+	                            gbc.gridy = 0;
+	                            gbc.anchor = GridBagConstraints.CENTER;
+	                            gbc.insets = new Insets(10, 10, 10, 10); // Điều chỉnh khoảng cách nếu cần thiết
+	                            gbc.gridwidth = 2;
+	                            newPanel.add(hello, gbc);
+
+	                            gbc.gridx = 0;
+	                            gbc.gridy = 1;
+	                            gbc.anchor = GridBagConstraints.WEST;
+	                            newPanel.add(manv, gbc);
+
+	                            gbc.gridx = 1;
+	                            gbc.gridy = 1;
+	                            gbc.anchor = GridBagConstraints.EAST;
+	                            newPanel.add(thang1, gbc);
+
+	                            gbc.gridx = 0;
+	                            gbc.gridy = 2;
+	                            gbc.anchor = GridBagConstraints.WEST;
+	                            newPanel.add(tennv, gbc);
+
+	                            gbc.gridx = 1;
+	                            gbc.gridy = 2;
+	                            gbc.anchor = GridBagConstraints.EAST;
+	                            newPanel.add(nam1, gbc);
+
+	                            gbc.gridx = 1;
+	                            gbc.gridy = 0;
+	                            gbc.anchor = GridBagConstraints.NORTHEAST;
+	                            gbc.insets = new Insets(10, 10, 10, 10);
+	                            newPanel.add(yourButton, gbc);
+
+	                            gbc.gridx = 0;
+	                            gbc.gridy = 3;
+	                            gbc.gridwidth = 2;
+	                            gbc.fill = GridBagConstraints.BOTH;
+	                            gbc.weightx = 1.0;
+	                            gbc.weighty = 1.0;
+	                            newPanel.add(scroolchamcongtrongbangluong, gbc);
+
+	                            
+	                            //in phieu chi tiet
+	                            yourButton.addActionListener(new ActionListener() {
+	                                @Override
+	                                public void actionPerformed(ActionEvent e) {
+	                                    
+	                                	String ma=(String) bangchamcongtheoma.getValueAt(0, 1);
+	                                	String ten=(String) bangchamcongtheoma.getValueAt(0, 1);
+	                                	
+	                                	int zoom = 150; // Giá trị zoom mong muốn (%)
+	                					int newWidth = (int) (bangchamcongtheoma.getWidth() * (zoom / 100.0));
+	                					int newHeight = (int) (bangchamcongtheoma.getHeight() * (zoom / 100.0));
+
+	                					bangchamcongtheoma.setPreferredScrollableViewportSize(new Dimension(newWidth, newHeight));
+
+	                					// Tiếp theo, bạn có thể tiến hành in bảng
+	                					// code in bảng ở đây
+
+	                			        // Print the table
+	                					// Create header format
+	                					String headerText = "Bảng Lương Chi tiết Công Nhân\n" +
+	                		                    "Mã Công Nhân: " + ma + "\n" +
+	                		                    "Tên Công Nhân: " + ten + "\n";
+
+	                		MessageFormat headerFormat = new MessageFormat(headerText);
+
+	                		// ... The rest of your code ...
+
+	                			        // Create footer format
+	                			        MessageFormat footerFormat = new MessageFormat("Page {0}");
+
+	                			        // Set header and footer alignment
+//	                			        headerFormat.setAlignment(MessageFormat.CENTER);
+//	                			        footerFormat.setAlignment(MessageFormat.RIGHT);
+
+	                			        // Create a PrinterJob instance
+	                			        PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+	                			        // Set the printable object as the JTable
+	                			        printerJob.setPrintable(bangchamcongtheoma.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat));
+
+	                			        // Set the page format to match the screen size
+	                			        PageFormat pageFormat = printerJob.defaultPage();
+	                			        pageFormat.setOrientation(PageFormat.PORTRAIT);
+
+	                			        // Set the zoom to 100%
+	                			        
+	                			        printerJob.setPrintable(bangchamcongtheoma.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat), pageFormat);
+	                			     
+
+	                			        // Print the table
+	                			        try {
+	                			        	
+	                			        	   printerJob.print();
+	                			        	   JOptionPane.showMessageDialog(null, "In bảng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	                			        } catch (PrinterException e1) {
+	                			            e1.printStackTrace();
+	                			        }
+	                	 
+	                                	
+	                                	
+	                                	
+	                                    
+	                                }
+	                            });
+
 	                            newPanel.setPreferredSize(new Dimension(1289, 461));
 	                         // Hiển thị panel bên trong một hộp thoại thông báo
 	                            JOptionPane optionPane = new JOptionPane(newPanel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);

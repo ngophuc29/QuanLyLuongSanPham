@@ -78,6 +78,41 @@ public class CongDoanDonHangDAO {
 			return dscdtm;
 	}
 	
+	
+	
+	
+	public List<CongDoanDonhang> getAllcongdoanDonHangtheosanphamCo2MaSptrungnhau(String masp ,String madonhang){
+		List<CongDoanDonhang> dscdtm=new ArrayList<CongDoanDonhang>();
+		ConnectDB.getInstance();
+		Connection con =ConnectDB.getConnection();
+		try {
+			String sql="  SELECT  [MaCongDoanDonHang] \r\n"
+					+ "					   \r\n"
+					+ "				     ,CongDoan.[MaCongDoan],tenCongDoan,giaCongDoan \r\n"
+					+ "					     ,CongDoanDonHang.[soLuongDatHang] \r\n"
+					+ "					     ,CongDoanDonHang.[TienDo] \r\n"
+					+ "					     ,CongDoanDonHang.[TrangThai] \r\n"
+					+ "					   FROM [QuanLyLuong_Nhom2].[dbo].[CongDoanDonHang] \r\n"
+					+ "					 join CongDoan on CongDoan.maCongDoan=CongDoanDonHang.MaCongDoan \r\n"
+					+ "					   join SanPham on CongDoan.maSP=SanPham.maSP \r\n"
+					+ "					 join DonHang on DonHang.maDonHang=CongDoanDonHang.MaDonHang \r\n"
+					+ "					 where SanPham.maSP=?  and CongDoanDonHang.[TrangThai]=1 and CongDoanDonHang.MaDonHang=?";
+			PreparedStatement statement= con.prepareStatement(sql);
+			 
+			statement.setString(1, masp);
+			statement.setString(2, madonhang);
+			ResultSet rs =statement.executeQuery();
+			while(rs.next()) {
+				
+				 
+				
+	        	dscdtm.add(new CongDoanDonhang(rs.getString(1), new CongDoan(rs.getString(2), rs.getString(3), rs.getDouble(4)), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return dscdtm;
+	}
 	//update tiến độ
 	
 			public static boolean updateTiendo( int tiendo,String maCongDoan,String macongdoandonhang ) {

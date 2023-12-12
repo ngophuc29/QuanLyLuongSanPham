@@ -30,6 +30,13 @@ public class DonHang {
 		this.ngaytao=ngaytao;
 		this.ngayhoanthanh=ngayhoanthanh;
 	}
+	
+	
+	public DonHang(String maDonHang) {
+		super();
+		this.maDonHang = maDonHang;
+	}
+
 	public LocalDate getNgaytao() {
 		return ngaytao;
 	}

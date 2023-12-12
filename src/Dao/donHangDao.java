@@ -108,7 +108,7 @@ public class donHangDao {
 		
 	//update hoàn thành của đơn hàng
 		
-		public static boolean updateHoanThanh( LocalDate ngayhoanthanh,String macongdoanhonhang ) {
+		public static boolean updateHoanThanh( LocalDate ngayhoanthanh,String macongdoanhonhang, String madonhangdungdeupdate ) {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
 			PreparedStatement stmt = null;
@@ -124,11 +124,13 @@ public class donHangDao {
 						+ "    INNER JOIN [QuanLyLuong_Nhom2].[dbo].[CongDoan] AS C ON CDH.[MaCongDoan] = C.[MaCongDoan]\r\n"
 						+ "    WHERE CDH.[TrangThai] = 2\r\n"
 						+ "    AND C.[tenCongDoan] = 'Hoàn thành đôi giày'\r\n"
-						+ "    AND CDH.[MaCongDoanDonHang] = ?\r\n"
+						+ "    AND CDH.[MaCongDoanDonHang] = ?\r\n "
+						+ "   AND cdh.MaDonHang=?"
 						+ ")");
 				 
 				stmt.setDate(1, Date.valueOf(ngayhoanthanh));
 				stmt.setString(2, macongdoanhonhang);
+				stmt.setString(3, madonhangdungdeupdate);
 				n=stmt.executeUpdate();
 			} catch (Exception e) {
 				// TODO: handle exception

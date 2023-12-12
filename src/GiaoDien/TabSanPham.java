@@ -1563,7 +1563,7 @@ table.addMouseListener(new MouseListener() {
 		            	tabledspc.clearSelection();
 //		            	modeldscongnhanphancong.getDataVector().removeAllElements();
 		            	
-		            	 List<CongDoanDonhang> loccongdoandonhang=cddhdao.getAllcongdoanDonHangtheosanpham(modeldssanphamphancong.getValueAt(selectedRow,  1).toString());
+		            	 List<CongDoanDonhang> loccongdoandonhang=cddhdao.getAllcongdoanDonHangtheosanphamCo2MaSptrungnhau(modeldssanphamphancong.getValueAt(selectedRow,  2).toString(),modeldssanphamphancong.getValueAt(selectedRow,  1).toString());
 		            	 modelcongdoanphancong.getDataVector().removeAllElements();
 						for (CongDoanDonhang cd : loccongdoandonhang) {
 							String tt="";
@@ -1581,7 +1581,7 @@ table.addMouseListener(new MouseListener() {
 						tablecdpc.setModel(modelcongdoanphancong);
 						
 						
-					 System.out.println("hello model cong doan"+	modeldssanphamphancong.getValueAt(selectedRow,  1).toString());
+					 System.out.println("hello model cong doan"+	modeldssanphamphancong.getValueAt(selectedRow,  2).toString());
 					 int rowCount = modelcongdoanphancong.getRowCount();
 						System.out.println("so dong loc bang :"+rowCount+"");
 						if(rowCount==0) {

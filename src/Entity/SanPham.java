@@ -6,7 +6,7 @@ public class SanPham {
 		private double giaSP;
 		private String kieuDang;
 		private String ChatLieu;
-		 
+		private DonHang donhang;
 		private int trangThai;
 		public SanPham(String maSp, String tenSp, double giaSP, String kieuDang, String chatLieu,  
 				int trangThai) {
@@ -18,6 +18,12 @@ public class SanPham {
 			ChatLieu = chatLieu;
 			 
 			this.trangThai = trangThai;
+		}
+		public DonHang getDonhang() {
+			return donhang;
+		}
+		public void setDonhang(DonHang donhang) {
+			this.donhang = donhang;
 		}
 		public SanPham(String maSp) {
 			super();
@@ -40,6 +46,8 @@ public class SanPham {
 			this.trangThai = trangThai;
 		}
 		
+	
+		
 		
 		
 		public SanPham(String maSp, String tenSp, double giaSP) {
@@ -47,6 +55,14 @@ public class SanPham {
 			this.maSp = maSp;
 			this.tenSp = tenSp;
 			this.giaSP = giaSP;
+		}
+		//load sp dang dat hang co 2 ma sp giong nhau
+		
+		public SanPham(String maSp, String tenSp, DonHang donhang) {
+			super();
+			this.maSp = maSp;
+			this.tenSp = tenSp;
+			this.donhang = donhang;
 		}
 		public String getMaSp() {
 			return maSp;

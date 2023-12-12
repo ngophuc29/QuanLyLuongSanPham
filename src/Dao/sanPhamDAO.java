@@ -13,6 +13,7 @@ import java.util.List;
 
 import Database.ConnectDB;
 import Entity.ChamCongNhanVien;
+import Entity.DonHang;
 import Entity.NhanVien;
 import Entity.SanPham;
 
@@ -87,16 +88,21 @@ public class sanPhamDAO {
 		ConnectDB.getInstance();
 		Connection con =ConnectDB.getConnection();
 		try {
-			String sql="\r\n"
-					+ "SELECT * \r\n"
-					+ "FROM SanPham \r\n"
-					+ "WHERE trangthai = 1 \r\n"
-					+ "  AND maSP IN (SELECT MaSanPham FROM [QuanLyLuong_Nhom2].[dbo].[DonHang] where trangthaiDonHang=1);";
+//			String sql="\r\n"
+//					+ "SELECT * \r\n"
+//					+ "FROM SanPham \r\n"
+//					+ "WHERE trangthai = 1 \r\n"
+//					+ "  AND maSP IN (SELECT MaSanPham FROM [QuanLyLuong_Nhom2].[dbo].[DonHang] where trangthaiDonHang=1);";
+			
+			String sql=" select MaDonHang,MaSanPham,TenSanPham\r\n"
+					+ "  from DonHang  \r\n"
+					+ "  where trangthaiDonHang=1";
 			Statement statement= con.createStatement();
 			ResultSet rs =statement.executeQuery(sql);
 			while(rs.next()) {
  
-	            dssp.add(new  SanPham(rs.getString(1),rs.getString(2),rs.getDouble(3),rs.getString(4),rs.getString(5),rs.getInt(6) ));
+//	            dssp.add(new  SanPham(rs.getString(1),rs.getString(2),rs.getDouble(3),rs.getString(4),rs.getString(5),rs.getInt(6) ));
+				  dssp.add(new  SanPham(rs.getString(1),rs.getString(2) ,new DonHang(rs.getString(3) ) ));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
