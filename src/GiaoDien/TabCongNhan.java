@@ -1515,7 +1515,8 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 	        });
 	        
 	        
-//	        nút tính lương
+//	        nút tính lương 
+	        
 	        fxbtnTnhLng.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -1556,9 +1557,7 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 
 							}
 							tableBangLuongCongNhan.setModel(modelbangluongCongNhan);
-							 
-							
-						
+							 	
 				}
 			});
 
