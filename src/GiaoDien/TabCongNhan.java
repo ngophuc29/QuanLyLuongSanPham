@@ -68,9 +68,13 @@ import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
@@ -1412,9 +1416,54 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 			fxbtnTnhLng.setBounds(1106, 623, 206, 55);
 			panel_4.add(fxbtnTnhLng);
 			
+			
+//			in bang luong
 			FixButton fxbtnInPdf = new FixButton("In");
 			fxbtnInPdf.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					int zoom = 150; // Giá trị zoom mong muốn (%)
+					int newWidth = (int) (tableBangLuongCongNhan.getWidth() * (zoom / 100.0));
+					int newHeight = (int) (tableBangLuongCongNhan.getHeight() * (zoom / 100.0));
+
+					tableBangLuongCongNhan.setPreferredScrollableViewportSize(new Dimension(newWidth, newHeight));
+
+					// Tiếp theo, bạn có thể tiến hành in bảng
+					// code in bảng ở đây
+
+			        // Print the table
+					// Create header format
+			        MessageFormat headerFormat = new MessageFormat("Bảng Lương Nhân Viên tháng 12" + "\n");
+
+			        // Create footer format
+			        MessageFormat footerFormat = new MessageFormat("Page {0}");
+
+			        // Set header and footer alignment
+//			        headerFormat.setAlignment(MessageFormat.CENTER);
+//			        footerFormat.setAlignment(MessageFormat.RIGHT);
+
+			        // Create a PrinterJob instance
+			        PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+			        // Set the printable object as the JTable
+			        printerJob.setPrintable(tableBangLuongCongNhan.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat));
+
+			        // Set the page format to match the screen size
+			        PageFormat pageFormat = printerJob.defaultPage();
+			        pageFormat.setOrientation(PageFormat.PORTRAIT);
+
+			        // Set the zoom to 100%
+			        
+			        printerJob.setPrintable(tableBangLuongCongNhan.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat), pageFormat);
+			     
+
+			        // Print the table
+			        try {
+			        	   printerJob.print();
+			        } catch (PrinterException e1) {
+			            e1.printStackTrace();
+			        }
+	 
 				}
 			});
 			fxbtnInPdf.setText("In PDF");
