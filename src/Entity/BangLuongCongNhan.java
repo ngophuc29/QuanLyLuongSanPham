@@ -13,6 +13,9 @@ public class BangLuongCongNhan {
 	private double phat;
 	private double troCap;
 	private double luongtangca;
+	
+	private int soluonglamdc ;
+	
 	public BangLuongCongNhan(String maBangLuongCongNhan, int thang, int nam, double tongluong,
 			ChamCongCongNhan maChamCongCognNhan, double luongsanpham, int bhxh, int tongsogiotangca, double phat,
 			double troCap, double luongtangca) {
@@ -42,6 +45,14 @@ public class BangLuongCongNhan {
 		this.phat = phat;
 		this.troCap = troCap;
 		this.luongtangca = luongtangca;
+	}
+
+
+	public BangLuongCongNhan(CongNhan maCongNhan, double tongluong, int soluonglamdc) {
+		super();
+		this.maCongNhan = maCongNhan;
+		this.tongluong = tongluong;
+		this.soluonglamdc = soluonglamdc;
 	}
 
 
@@ -121,6 +132,17 @@ public class BangLuongCongNhan {
 	public void setLuongtangca(double luongtangca) {
 		this.luongtangca = luongtangca;
 	}
+	
+	public int getSoluonglamdc() {
+		return soluonglamdc;
+	}
+
+
+	public void setSoluonglamdc(int soluonglamdc) {
+		this.soluonglamdc = soluonglamdc;
+	}
+
+
 	@Override
 	public String toString() {
 		return "BangLuongCongNhan [maBangLuongCongNhan=" + maBangLuongCongNhan + ", thang=" + thang + ", nam=" + nam

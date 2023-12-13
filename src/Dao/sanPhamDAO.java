@@ -111,6 +111,33 @@ public class sanPhamDAO {
 	}
 	
 
- 
+public static boolean updatesanpham(int trangthai ,String ma  ) {
+		
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n=0;
+		
+		try {
+			stmt = con.prepareStatement("update SanPham set  trangthai=? where maSP=? ");
+			
+			stmt.setInt(1, trangthai);
+			stmt.setString(2, ma);
+		 
+			n = stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+
+		}
+		return n>0;
+	}
 }
  

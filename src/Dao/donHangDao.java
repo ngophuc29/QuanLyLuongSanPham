@@ -30,7 +30,7 @@ public class donHangDao {
 		ConnectDB.getInstance();
 		Connection con =ConnectDB.getConnection();
 		try {
-			String sql=" select * from DonHang order by madonhang asc";
+			String sql=" select * from DonHang order by madonhang asc ";
 			Statement statement= con.createStatement();
 			ResultSet rs =statement.executeQuery(sql);
 			while(rs.next()) {

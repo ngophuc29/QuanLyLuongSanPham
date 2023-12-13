@@ -17,13 +17,20 @@ import javax.swing.JRadioButton;
 import com.toedter.calendar.JDateChooser;
 
 import Dao.BangLuongCongNhanDAO;
+import Dao.nhanVienDAO;
 import Dao.thongkeDAO;
+import Entity.BangLuongCongNhan;
 import Entity.BangLuongNhanVien;
+import Entity.ChamCongCongNhan;
+import Entity.NhanVien;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -53,8 +60,15 @@ public class TabThongKe extends JPanel {
 	 private int[] tongSoLuong   ;
 	    private String[] tenSP  ;
 //	
+		private DefaultTableModel modelthongkeluongnhanvien;
+		private DefaultTableModel modelthongkeluongcongnhan;
+		private DefaultTableModel modelthongkesanpham;
+		
+		private JTable tablethongkeluongnhanvien;
+		private JTable tablethongkeluongcongnhan;
+		private JTable tablethongkesanpham;
 	public TabThongKe() {
-		 
+		Database.ConnectDB.getInstance().connect();
 		setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -72,13 +86,15 @@ public class TabThongKe extends JPanel {
 		panel.setBounds(10, 11, 1365, 765);
 		panelQuanLyNhanVien.add(panel);
 		
-		FixButton lammoithemcongdoan = new FixButton("Lọc");
-		lammoithemcongdoan.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
-		lammoithemcongdoan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lammoithemcongdoan.setForeground(new Color(255, 255, 255));
-		lammoithemcongdoan.setBackground(new Color(69, 129, 142));
-		lammoithemcongdoan.setBounds(687, 282, 150, 40);
-		panel.add(lammoithemcongdoan);
+		FixButton lammoibangthongke = new FixButton("Lọc");
+		lammoibangthongke.setText("Lọc thống kê lương nhân viên");
+		
+		lammoibangthongke.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
+		lammoibangthongke.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lammoibangthongke.setForeground(new Color(255, 255, 255));
+		lammoibangthongke.setBackground(new Color(69, 129, 142));
+		lammoibangthongke.setBounds(546, 282, 277, 40);
+		panel.add(lammoibangthongke);
 		
 		FixButton btnlammoithongkeluong = new FixButton("Làm Mới");
 		btnlammoithongkeluong.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/reload (1).png")));
@@ -89,7 +105,7 @@ public class TabThongKe extends JPanel {
 		btnlammoithongkeluong.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnlammoithongkeluong.setForeground(new Color(255, 255, 255));
 		btnlammoithongkeluong.setBackground(new Color(0, 158, 15));
-		btnlammoithongkeluong.setBounds(914, 282, 150, 40);
+		btnlammoithongkeluong.setBounds(1129, 282, 150, 40);
 		panel.add(btnlammoithongkeluong);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -173,7 +189,7 @@ public class TabThongKe extends JPanel {
 		LocalDate locallaythangnamhientai = LocalDate.now();
 		int thang = locallaythangnamhientai.getMonthValue();
 		 
-		thangthongKeLuong.setSelectedItem(thang+"");
+		thangthongKeLuong.setSelectedItem(String.valueOf(thang));
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Năm");
 		lblNewLabel_2_1_1.setForeground(new Color(255, 255, 255));
@@ -211,17 +227,110 @@ public class TabThongKe extends JPanel {
 		panel_2.setLayout(null);
 		tabbedPane_1.addTab("Nhân Viên", null, panel_2, null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		
+		
+		modelthongkeluongnhanvien= new DefaultTableModel(); 
+		modelthongkeluongnhanvien.addColumn("STT");
+		modelthongkeluongnhanvien.addColumn("Mã NV");
+		modelthongkeluongnhanvien.addColumn("Họ Tên ");
+		modelthongkeluongnhanvien.addColumn("Tổng Lương");
+ 
+		tablethongkeluongnhanvien= new JTable(modelthongkeluongnhanvien);
+		
+		JScrollPane scrollPane = new JScrollPane(tablethongkeluongnhanvien);
 		scrollPane.setBounds(10, 11, 1228, 353);
 		panel_2.add(scrollPane);
 		
+		
+		//load tk luong nhan vien
+				tkdao = new thongkeDAO();
+				int i=1;
+				for (BangLuongNhanVien nv : tkdao.getthongkeluongnhanvien(Integer.parseInt(thangthongKeLuong.getSelectedItem().toString()),Integer.parseInt(namthongke.getSelectedItem().toString()))) {
+					Object []obj= {i,nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getTongluong() };
+					i++;
+					modelthongkeluongnhanvien.addRow(obj);
+					
+				}
+		
+				
+				
+				lammoibangthongke.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						int thang =Integer.parseInt((String) thangthongKeLuong.getSelectedItem());
+						int nam =Integer.parseInt((String) namthongke.getSelectedItem());
+						  List<BangLuongNhanVien> locbangluong=tkdao.getthongkeluongnhanvien(thang,nam);
+							int i=1;
+							modelthongkeluongnhanvien.getDataVector().removeAllElements();
+							for (BangLuongNhanVien nv : locbangluong) {
+								Object []obj= {i,nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getTongluong() };
+								i++;
+								modelthongkeluongnhanvien.addRow(obj);
+								
+								
+							}
+							tablethongkeluongnhanvien.setModel(modelthongkeluongnhanvien);
+							
+							
+//							System.out.println("hello model cong doan"+	modelthongkeluongnhanvien.getValueAt(selectedRow,  2).toString());
+							 int rowCount = modelthongkeluongnhanvien.getRowCount();
+								System.out.println("so dong loc bang :"+rowCount+"");
+								if(rowCount==0) {
+									JOptionPane.showMessageDialog(null, "Error:Không tìm thấy dữ liệu thống kê của thời điểm này");
+									modelthongkeluongnhanvien.getDataVector().removeAllElements();
+									 Object []obj= {"","","",""};
+									 
+									 modelthongkeluongnhanvien.addRow(obj);
+									if (modelthongkeluongnhanvien.getRowCount() > 0) {
+										modelthongkeluongnhanvien.removeRow(0);
+									}
+								}
+							
+							
+							
+					}
+				});
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setLayout(null);
 		tabbedPane_1.addTab("Công Nhân", null, panel_3_1, null);
 		
-		JScrollPane scrollPane_1_1 = new JScrollPane();
+		modelthongkeluongcongnhan= new DefaultTableModel(); 
+		modelthongkeluongcongnhan.addColumn("STT");
+		modelthongkeluongcongnhan.addColumn("Mã CN");
+		modelthongkeluongcongnhan.addColumn("Họ Tên ");
+		modelthongkeluongcongnhan.addColumn("Số Lượng ");
+		modelthongkeluongcongnhan.addColumn("Tổng Lương");
+ 
+		tablethongkeluongcongnhan= new JTable(modelthongkeluongcongnhan);
+		
+		
+		JScrollPane scrollPane_1_1 = new JScrollPane(tablethongkeluongcongnhan);
 		scrollPane_1_1.setBounds(10, 11, 1228, 353);
 		panel_3_1.add(scrollPane_1_1);
+		
+		//load tk luong cong nhan
+		
+		tkdao = new thongkeDAO();
+		int i1=1;
+		for (BangLuongCongNhan nv : tkdao.getthongkeluongcongnhan(Integer.parseInt(thangthongKeLuong.getSelectedItem().toString()),Integer.parseInt(namthongke.getSelectedItem().toString()))) {
+			Object []obj= {i1,nv.getMaCongNhan().getMaCongNhan(),nv.getMaCongNhan().getTencongNhan(),nv.getSoluonglamdc(),nv.getTongluong() };
+			i1++;
+			modelthongkeluongcongnhan.addRow(obj);
+			
+		}
+
+		
+		
+//		lammoibangthongke.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				
+//					
+//					
+//			}
+//		});
+		
+		
 		
 		JPanel panelccnv = new JPanel();
 		tabbedPane.addTab("Thống kê sản phâm", null, panelccnv, null);
@@ -239,13 +348,14 @@ public class TabThongKe extends JPanel {
 		panel_3.setBounds(10, 11, 1328, 738);
 		panel_1.add(panel_3);
 		
-		FixButton lammoithemcongdoan_1 = new FixButton("Lọc");
-		lammoithemcongdoan_1.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
-		lammoithemcongdoan_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lammoithemcongdoan_1.setForeground(Color.WHITE);
-		lammoithemcongdoan_1.setBackground(new Color(69, 129, 142));
-		lammoithemcongdoan_1.setBounds(651, 218, 150, 40);
-		panel_3.add(lammoithemcongdoan_1);
+		FixButton locthongkesanpham = new FixButton("Lọc");
+	
+		locthongkesanpham.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
+		locthongkesanpham.setFont(new Font("Tahoma", Font.BOLD, 14));
+		locthongkesanpham.setForeground(Color.WHITE);
+		locthongkesanpham.setBackground(new Color(69, 129, 142));
+		locthongkesanpham.setBounds(651, 218, 150, 40);
+		panel_3.add(locthongkesanpham);
 		
 		FixButton btnthongkesanpham = new FixButton("Làm Mới");
 		btnthongkesanpham.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/reload (1).png")));
@@ -294,13 +404,16 @@ public class TabThongKe extends JPanel {
 		thangthongsanpham.addItem("9");
 		thangthongsanpham.addItem("10");
 		thangthongsanpham.addItem("11");
-		thangthongKeLuong.addItem("12");
+		thangthongsanpham.addItem("12");
 		
 		
 		
 		 
-		 
-		thangthongsanpham.setSelectedItem(thang+"");
+		LocalDate currentDate = LocalDate.now();
+		int thangHienTai = currentDate.getMonthValue();
+
+		// Đặt giá trị tháng hiện tại cho JComboBox
+		thangthongsanpham.setSelectedItem(String.valueOf(thangHienTai));
 		
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("Năm");
@@ -335,9 +448,9 @@ public class TabThongKe extends JPanel {
 		panel_1_2_1_1.setBounds(130, 67, 438, 124);
 		panel_3.add(panel_1_2_1_1);
 		
-		JLabel lblTngSSn = new JLabel("Tổng số sản phẩm hoàn thành");
+		JLabel lblTngSSn = new JLabel("Tổng số sản phẩm đã hoàn thành");
 		lblTngSSn.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblTngSSn.setBounds(165, 11, 133, 19);
+		lblTngSSn.setBounds(107, 11, 237, 19);
 		panel_1_2_1_1.add(lblTngSSn);
 		
 		JLabel tongsanpham = new JLabel("<dynamic>");
@@ -354,114 +467,120 @@ public class TabThongKe extends JPanel {
 		tongluongcongnhan.setText(tkdao.tongluongcongnhan(Integer.parseInt(thangthongKeLuong.getSelectedItem().toString()), Integer.parseInt(namthongke.getSelectedItem().toString()))+"");
 		tongluong.setText(tkdao.tongluong(Integer.parseInt(thangthongKeLuong.getSelectedItem().toString()), Integer.parseInt(namthongke.getSelectedItem().toString()))+"");
 		
+		FixButton locthongkecongnhan = new FixButton("Lọc");
+		locthongkecongnhan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int thang =Integer.parseInt((String) thangthongKeLuong.getSelectedItem());
+				int nam =Integer.parseInt((String) namthongke.getSelectedItem());
+				  List<BangLuongCongNhan> locbangluong=tkdao.getthongkeluongcongnhan(thang,nam);
+					int i=1;
+					modelthongkeluongcongnhan.getDataVector().removeAllElements();
+					for (BangLuongCongNhan nv : locbangluong) {
+						Object []obj= {i,nv.getMaCongNhan().getMaCongNhan(),nv.getMaCongNhan().getTencongNhan(),nv.getSoluonglamdc(),nv.getTongluong() };
+						i++;
+						modelthongkeluongcongnhan.addRow(obj);
+						
+						
+					}
+					tablethongkeluongcongnhan.setModel(modelthongkeluongcongnhan);
+					
+					
+//					System.out.println("hello model cong doan"+	modelthongkeluongnhanvien.getValueAt(selectedRow,  2).toString());
+					 int rowCount = modelthongkeluongcongnhan.getRowCount();
+						System.out.println("so dong loc bang :"+rowCount+"");
+						if(rowCount==0) {
+							JOptionPane.showMessageDialog(null, "Error:Không tìm thấy dữ liệu thống kê của thời điểm này");
+							modelthongkeluongcongnhan.getDataVector().removeAllElements();
+							 Object []obj= {"","","",""};
+							 
+							 modelthongkeluongcongnhan.addRow(obj);
+							if (modelthongkeluongcongnhan.getRowCount() > 0) {
+								modelthongkeluongcongnhan.removeRow(0);
+							}
+						}
+					
+			}
+		});
+		locthongkecongnhan.setText("Lọc thống kê công nhân");
+		locthongkecongnhan.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
+		locthongkecongnhan.setForeground(Color.WHITE);
+		locthongkecongnhan.setFont(new Font("Tahoma", Font.BOLD, 14));
+		locthongkecongnhan.setBackground(new Color(69, 129, 142));
+		locthongkecongnhan.setBounds(864, 282, 255, 40);
+		panel.add(locthongkecongnhan);
+		
 		
 		
 		tongdoanhthu.setText(tkdao.tongdoanhthu(Integer.parseInt(thangthongsanpham.getSelectedItem().toString()), Integer.parseInt(namthongKesanpham.getSelectedItem().toString()))+"");
 		tongsanpham.setText(tkdao.tongsanphamhoanthanh(Integer.parseInt(thangthongsanpham.getSelectedItem().toString()), Integer.parseInt(namthongKesanpham.getSelectedItem().toString()))+"");
 		
-		 
-		List<Integer> tongluonng = tkdao.tongSoLuong(Integer.parseInt(thangthongsanpham.getSelectedItem().toString()), Integer.parseInt(namthongKesanpham.getSelectedItem().toString()));
-
-		 tongSoLuong = new int[tongluonng.size()];
-
-		for (int i = 0; i < tongluonng.size(); i++) {
-		    tongSoLuong[i] = tongluonng.get(i);
-		    
-		    
-		    System.out.println(tongSoLuong[i]);
-		}
-		 
-		List<String> dssp = tkdao.tensanpham( );
-
-		  tenSP = new String[dssp.size()];
-
-		for (int i = 0; i < dssp.size(); i++) {
-			tenSP[i] = dssp.get(i);
-		    
-		    System.out.println(tenSP[i]);
-		}
-
-		// Use the tenSP array here
 		
 		
-		JPanel chartPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int padding = 50;
-                int width = getWidth() - 2 * padding;
-                int height = getHeight() - 2 * padding;
-
-                // Vẽ trục x và trục y
-                g2d.drawLine(padding, getHeight() - padding, getWidth() - padding, getHeight() - padding);
-                g2d.drawLine(padding, padding, padding, getHeight() - padding);
-
-                // Vẽ các đường thẳng đánh dấu cho các giá trị trục y
-                int numTicks = 11; // Số lượng đường thẳng đánh dấu trục y
-                int tickSpacing = height / (numTicks - 1);
-
-                for (int i = 0; i < numTicks; i++) {
-                    int x = padding;
-                    int y = getHeight() - padding - i * tickSpacing;
-
-                    g2d.drawLine(x, y, x - 5, y);
-                    g2d.drawString(String.valueOf(i * 500), x - 40, y + 5);
-                }
-
-                // Tính toán độ dài của mỗi cột
-                int columnWidth = width / tenSP.length;
-
-                // Vẽ các điểm dữ liệu và đường cong giữa chúng
-                for (int i = 0; i < tenSP.length; i++) {
-                    int x = padding + i * columnWidth + columnWidth / 2;
-                    int y = getHeight() - padding - (int) (((double) tongSoLuong[i] / getMaxValue()) * height);
-
-                    g2d.setColor(Color.BLUE);
-                    g2d.fillOval(x - 5, y - 5, 10, 10);
-
-                    if (i > 0) {
-                        int prevX = padding + (i - 1) * columnWidth + columnWidth / 2;
-                        int prevY = getHeight() - padding - (int) (((double) tongSoLuong[i - 1] / getMaxValue()) * height);
-
-                        g2d.setColor(Color.RED);
-                        g2d.draw(curvedLine(prevX, prevY, x, y));
-                    }
-
-                    g2d.setColor(Color.BLACK);
-                    g2d.drawString(tenSP[i], x - 20, getHeight() - padding + 15);
-                    g2d.drawString(String.valueOf(tongSoLuong[i]), x - 10, y - 10);
-                }
-            }
-        };
-
-        
-        chartPanel.setBounds(44, 277, 1238, 428);
-        panel_3.add(chartPanel);
+		
+		modelthongkesanpham= new DefaultTableModel(); 
+		modelthongkesanpham.addColumn("STT");
+		modelthongkesanpham.addColumn("Mã Sản Phẩm");
+		modelthongkesanpham.addColumn("Họ Tên ");
+		modelthongkesanpham.addColumn("Số Lượng Đã Làm ");
+		modelthongkesanpham.addColumn("Tổng Đạt Được");
+ 
+		tablethongkesanpham= new JTable(modelthongkesanpham);
+		
+		JScrollPane scrollPanetksanpham = new JScrollPane(tablethongkesanpham);
+		scrollPanetksanpham.setBounds(30, 295, 1276, 432);
+		panel_3.add(scrollPanetksanpham);
+		
+		//load tk luong nhan vien
+		tkdao = new thongkeDAO();
+		int i11=1;
+		for (ChamCongCongNhan nv : tkdao.getthongkesanpham(Integer.parseInt(thangthongKeLuong.getSelectedItem().toString()),Integer.parseInt(namthongke.getSelectedItem().toString()))) {
+			Object []obj= {i11,nv.getSanpham().getMaSp(),nv.getSanpham().getTenSp(),nv.getSoluongspdachamcong(),nv.getTongtiensanpham() };
+			i11++;
+			modelthongkesanpham.addRow(obj);
+			
+		}
+		
+		locthongkesanpham.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int thang =Integer.parseInt((String) thangthongsanpham.getSelectedItem());
+				int nam =Integer.parseInt((String) namthongKesanpham.getSelectedItem());
+				  List<ChamCongCongNhan> locbangluong=tkdao.getthongkesanpham(thang,nam);
+					int i=1;
+					modelthongkesanpham.getDataVector().removeAllElements();
+					for (ChamCongCongNhan nv : locbangluong) {
+						Object []obj= {i,nv.getSanpham().getMaSp(),nv.getSanpham().getTenSp(),nv.getSoluongspdachamcong(),nv.getTongtiensanpham() };
+						i++;
+						modelthongkesanpham.addRow(obj);
+						
+						
+					}
+					tablethongkesanpham.setModel(modelthongkesanpham);
+					
+					
+//					System.out.println("hello model cong doan"+	modelthongkeluongnhanvien.getValueAt(selectedRow,  2).toString());
+					 int rowCount = modelthongkesanpham.getRowCount();
+						System.out.println("so dong loc bang :"+rowCount+"");
+						if(rowCount==0) {
+							JOptionPane.showMessageDialog(null, "Error:Không tìm thấy dữ liệu thống kê của thời điểm này");
+							modelthongkesanpham.getDataVector().removeAllElements();
+							 Object []obj= {"","","",""};
+							 
+							 modelthongkesanpham.addRow(obj);
+							if (modelthongkesanpham.getRowCount() > 0) {
+								modelthongkesanpham.removeRow(0);
+							}
+						}
+						
+						tongdoanhthu.setText(tkdao.tongdoanhthu(Integer.parseInt(thangthongsanpham.getSelectedItem().toString()), Integer.parseInt(namthongKesanpham.getSelectedItem().toString()))+"");
+						tongsanpham.setText(tkdao.tongsanphamhoanthanh(Integer.parseInt(thangthongsanpham.getSelectedItem().toString()), Integer.parseInt(namthongKesanpham.getSelectedItem().toString()))+"");
+			}
+		});
+		
+//	 
       
     }
-
-   
-		 
-	 
- 
-	 private int getMaxValue() {
-	        int max = tongSoLuong[0];
-	        for (int value : tongSoLuong) {
-	            if (value > max) {
-	                max = value;
-	            }
-	        }
-	        return max;
-	    }
-
-	    private Shape curvedLine(int x1, int y1, int x2, int y2) {
-	        int ctrlX = (x1 + x2) / 2;
-	        int ctrlY = Math.min(y1, y2) - Math.abs(x1 - x2) / 2;
-
-	        return new QuadCurve2D.Double(x1, y1, ctrlX, ctrlY, x2, y2);
-	    }
 }

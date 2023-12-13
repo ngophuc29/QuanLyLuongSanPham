@@ -9,9 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 import org.opencv.core.Core;
 
-//import Dao.test;
-
-//import Database.ConnectDB;
+import Dao.test1;
+//
+import Database.ConnectDB;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -33,9 +33,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class UiChinh2 extends JFrame {
-
 	private JPanel contentPane;
-	 
 	public JPanel panelnhanvien;
 	public JPanel panelcongnhan;
 	public JPanel panelsanpham;
@@ -44,17 +42,13 @@ public class UiChinh2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					UiChinh2 frame = new UiChinh2();
 					frame.setVisible(true);
-//					System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//			        SwingUtilities.invokeLater(() -> {
-//			            test scanner = new test();
-//			            scanner.start();
-//			        });
+					
 			       
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -292,5 +286,6 @@ public class UiChinh2 extends JFrame {
         
         
 	}
+
 	
 }

@@ -62,6 +62,20 @@ public class CongNhan {
 		this.trangthai = trangthai;
 		this.hinhanhnhanvien = hinhanhnhanvien;
 	}
+	
+	public CongNhan(String tencongNhan, String diachi, String sodienthoai,String maCongNhan) {
+		super();
+		this.tencongNhan = tencongNhan;
+		this.diachi = diachi;
+		this.sodienthoai = sodienthoai;
+		this.maCongNhan = maCongNhan;
+	}
+	
+//	public CongNhan(String maCongNhan, String tencongNhan) {
+//		super();
+//		this.maCongNhan = maCongNhan;
+//		this.tencongNhan = tencongNhan;
+//	}
 	public String getMaCongNhan() {
 		return maCongNhan;
 	}

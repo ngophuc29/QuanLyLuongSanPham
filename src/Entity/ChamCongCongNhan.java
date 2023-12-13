@@ -10,6 +10,13 @@ public class ChamCongCongNhan {
 	private CongDoan maCongDoan;
 	private double tiencong;
 	int soluongduocgiao;
+	
+	
+	private SanPham sanpham;
+	private int soluongspdachamcong;
+	private double tongtiensanpham;
+	
+	
 	public ChamCongCongNhan(CongNhan maCongNhan, CongNhan tenCongNhan, LocalDate ngaycham, int soLuong,
 			int sogiotangca) {
 		super();
@@ -128,8 +135,35 @@ public class ChamCongCongNhan {
 		this.soluongduocgiao=soluongduocgiao;
 	}
 	//
+	
+	
 	public String getGhiChu() {
 		return ghiChu;
+	}
+	
+	public ChamCongCongNhan(SanPham sanpham, int soluongspdachamcong, double tongtiensanpham) {
+		super();
+		this.sanpham = sanpham;
+		this.soluongspdachamcong = soluongspdachamcong;
+		this.tongtiensanpham = tongtiensanpham;
+	}
+	public SanPham getSanpham() {
+		return sanpham;
+	}
+	public void setSanpham(SanPham sanpham) {
+		this.sanpham = sanpham;
+	}
+	public int getSoluongspdachamcong() {
+		return soluongspdachamcong;
+	}
+	public void setSoluongspdachamcong(int soluongspdachamcong) {
+		this.soluongspdachamcong = soluongspdachamcong;
+	}
+	public double getTongtiensanpham() {
+		return tongtiensanpham;
+	}
+	public void setTongtiensanpham(double tongtiensanpham) {
+		this.tongtiensanpham = tongtiensanpham;
 	}
 	public double getTiencong() {
 		return tiencong;

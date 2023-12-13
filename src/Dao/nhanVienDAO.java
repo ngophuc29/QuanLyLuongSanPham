@@ -88,10 +88,10 @@ public class nhanVienDAO {
 		ConnectDB.getInstance();
 		Connection con =ConnectDB.getConnection();
 		try {
-			String sql="SELECT * from NhanVien where tenNV=? ";
+			String sql="SELECT * from NhanVien where maNV like ? ";
 			PreparedStatement statement= con.prepareStatement(sql);
 			 
-			statement.setString(1, ten);
+			statement.setString(1, "%"+ten+"%");
 			ResultSet rs =statement.executeQuery();
 			while(rs.next()) {
 				

@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import com.toedter.calendar.JDateChooser;
@@ -462,7 +463,44 @@ table.addMouseListener(new MouseListener() {
 		FixButton suaqlnspbtn = new FixButton("Sửa");
 		suaqlnspbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				
+
+				int row=table.getSelectedRow();
+							
+							if(row>=0) {
+								String ma  = masp.getText().toString();
+								 
+								String trangthai = cbotrangthai.getSelectedItem().toString();
+//								 
+								int tt=1;
+								if(trangthai=="Đăng sản xuất") tt=1;
+								else tt=2;
+								 
+								 
+								SanPham sp= new SanPham(trangthai,ma);
+
+//								sa nv= new CongNhan( tenNV,   diachi ,sdt,ma );
+								System.out.println(sp.toString());
+					 
+								
+								 JOptionPane optionPane = new JOptionPane(this, JOptionPane.PLAIN_MESSAGE, JOptionPane.YES_NO_OPTION);
+		                            JDialog dialog = optionPane.createDialog("Bạn có chắc muốn thay đổi thông tin của sản phẩm này !!");
+		                            dialog.setVisible(true);
+
+		                            // Kiểm tra xem người dùng đã đóng hộp thoại
+		                            if (optionPane.getValue() != null && (int) optionPane.getValue() == JOptionPane.YES_OPTION) {
+		                            	spdao.updatesanpham(tt, ma);
+		                            	
+//		                            	blnv.updateHeSoLuong(hslnv1, maNV);
+		                            	
+//		                            
+									table.setValueAt(trangthai, row, 6);
+//							 
+									JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thành công!!");
+//								 
+		                            }
+					 
+			}}
 		});
 		suaqlnspbtn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		suaqlnspbtn.setForeground(Color.WHITE);
@@ -626,6 +664,7 @@ table.addMouseListener(new MouseListener() {
 				}
 				
 				tablespDonHang.setModel(modeldssanphamDonHang);
+				slspdh.setText("");
 			}
 		});
 		lammoithemcongdoan_1_1.setForeground(Color.WHITE);

@@ -12,8 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.ConnectDB;
+import Entity.BangLuongCongNhan;
+import Entity.BangLuongNhanVien;
+import Entity.ChamCongCongNhan;
 import Entity.ChamCongNhanVien;
 import Entity.CongDoan;
+import Entity.CongNhan;
 import Entity.NhanVien;
 import Entity.SanPham;
 
@@ -240,5 +244,96 @@ public class thongkeDAO {
 	    }
 	    return ds;
 	}
+	
+	public List<BangLuongNhanVien> getthongkeluongnhanvien( int thang , int nam ){
+		List<BangLuongNhanVien> dsBangLuongNV=new ArrayList<BangLuongNhanVien>();
+		ConnectDB.getInstance();
+		Connection con =ConnectDB.getConnection();
+		try {
+			String sql="SELECT NhanVien.maNV ,tenNV,tongluong from BangLuongNhanVien\r\n"
+					+ "			join NhanVien on NhanVien.maNV=BangLuongNhanVien.maNV\r\n"
+					+ "			where  thang=? and nam=? order by tongluong desc ";
+			PreparedStatement statement= con.prepareStatement(sql);
+			 
+			 
+			statement.setInt(1, thang);
+			statement.setInt(2, nam);
+			ResultSet rs =statement.executeQuery();
+			while(rs.next()) {
+				
+				 ;
+				
+				 dsBangLuongNV.add(new BangLuongNhanVien(new NhanVien(rs.getString(1),rs.getString(2)),rs.getDouble(3) ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+		return dsBangLuongNV;
+	}
+	
+	
+	public List<BangLuongCongNhan> getthongkeluongcongnhan( int thang , int nam ){
+		List<BangLuongCongNhan> dstklcn=new ArrayList<BangLuongCongNhan>();
+		ConnectDB.getInstance();
+		Connection con =ConnectDB.getConnection();
+		try {
+			String sql=" SELECT CongNhan.maCongNhan ,tenCongNhan ,  sum(soluong) ,tongluong from [BangLuongCongNhan]\r\n"
+					+ "			join CongNhan on CongNhan.maCongNhan=[BangLuongCongNhan].maCN\r\n"
+					+ "			join ChamCongCongNhan on ChamCongCongNhan.maCongNhan=[BangLuongCongNhan].maCN\r\n"
+					+ "			where  thang=? and nam=? \r\n"
+					+ "			group by CongNhan.maCongNhan ,tenCongNhan ,tongluong\r\n"
+					+ "			order by tongluong,sum(soluong) desc";
+			PreparedStatement statement= con.prepareStatement(sql);
+			 
+			 
+			statement.setInt(1, thang);
+			statement.setInt(2, nam);
+			ResultSet rs =statement.executeQuery();
+			while(rs.next()) {
+				
+				 ;
+				
+				 dstklcn.add( new BangLuongCongNhan(new CongNhan(rs.getString(1),rs.getString(2)),rs.getDouble(3),rs.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+		return dstklcn;
+	}
+	
+	
+	
+	public List<ChamCongCongNhan> getthongkesanpham( int thang , int nam ){
+		List<ChamCongCongNhan> dstksp=new ArrayList<ChamCongCongNhan>();
+		ConnectDB.getInstance();
+		Connection con =ConnectDB.getConnection();
+		try {
+			String sql=" SELECT sp.maSP,tenSP, SUM(soluong), SUM(soluong * giaSP)\r\n"
+					+ "FROM ChamCongCongNhan cz\r\n"
+					+ "JOIN CongDoan cc ON cc.maCongDoan = cz.macongdoan\r\n"
+					+ "JOIN SanPham sp ON sp.maSP = cc.maSP\r\n"
+					+ "WHERE tenCongDoan = 'Hoàn thành đôi giày' AND MONTH(ngaycham) = ? AND YEAR(ngaycham) = ?\r\n"
+					+ "GROUP BY tenSP, sp.maSP;";
+			PreparedStatement statement= con.prepareStatement(sql);
+			 
+			 
+			statement.setInt(1, thang);
+			statement.setInt(2, nam);
+			ResultSet rs =statement.executeQuery();
+			while(rs.next()) {
+				
+				 ;
+				
+				 dstksp.add( new ChamCongCongNhan(new SanPham(rs.getString(1),rs.getString(2)),rs.getInt(3),rs.getDouble(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	 
+		return dstksp;
+	}
+	
 }
  

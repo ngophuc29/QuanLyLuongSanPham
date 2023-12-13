@@ -94,6 +94,13 @@ public class BangLuongNhanVien {
 		this.tongluong = tongluong;
 		this.tiencong = tiencong;
 	}
+	
+	
+	public BangLuongNhanVien(NhanVien nV, double tongluong) {
+		super();
+		NV = nV;
+		this.tongluong = tongluong;
+	}
 	public double getTiencong() {
 		return tiencong;
 	}

@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import org.opencv.core.Core;
 
 import Dao.nhanVienDAO;
-import Dao.test;
 import Database.ConnectDB;
 import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
@@ -131,11 +130,7 @@ public class DangNhap extends JFrame {
 							UiChinh2 tc= new UiChinh2();
 //							datPhong dt= new datPhong();
 							tc.setVisible(true);
-							System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-					        SwingUtilities.invokeLater(() -> {
-					            test scanner = new test();
-					            scanner.start();
-					        });
+							
 //							tc.txtmanvdn.setText(txttk.getText());
 //							dt.txtmanvintable.setText(txttk.getText());
 //							maNV=txttk.getText();

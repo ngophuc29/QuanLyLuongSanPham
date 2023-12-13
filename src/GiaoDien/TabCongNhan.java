@@ -28,6 +28,7 @@ import Dao.CongDoanDonHangDAO;
 import Dao.bangPhanCongDAO;
 import Dao.congNhanDAO;
 import Dao.donHangDao;
+import Dao.nhanVienDAO;
 import Dao.sanPhamDAO;
 import Entity.BangLuongCongNhan;
 import Entity.BangLuongNhanVien;
@@ -37,6 +38,7 @@ import Entity.ChamCongNhanVien;
 import Entity.CongDoan;
 import Entity.CongDoanDonhang;
 import Entity.CongNhan;
+import Entity.NhanVien;
 import Entity.SanPham;
 
 import javax.swing.JScrollPane;
@@ -287,9 +289,9 @@ public class TabCongNhan extends JPanel  {
 		trocapCongNhan.setBounds(1072, 126, 138, 20);
 		panel.add(trocapCongNhan);
 		
-		JScrollPane scrollPaneBangNhanVien = new JScrollPane();
-		scrollPaneBangNhanVien.setBounds(10, 234, 1322, 361);
-		panelQuanLyNhanVien.add(scrollPaneBangNhanVien);
+		JScrollPane scrollPaneBangcongnhan = new JScrollPane();
+		scrollPaneBangcongnhan.setBounds(10, 234, 1322, 361);
+		panelQuanLyNhanVien.add(scrollPaneBangcongnhan);
 		
 	 
 		
@@ -319,7 +321,7 @@ public class TabCongNhan extends JPanel  {
 		tableQuanLyCongNhan.getColumnModel().getColumn(12).setMaxWidth(0);
 		
 //		scrollPane.setViewportView(table);
-		scrollPaneBangNhanVien.setViewportView(tableQuanLyCongNhan);
+		scrollPaneBangcongnhan.setViewportView(tableQuanLyCongNhan);
 		
 		
 		
@@ -356,6 +358,18 @@ public class TabCongNhan extends JPanel  {
 		FixButton lammoiqlcnBtn = new FixButton("Làm mới");
 		lammoiqlcnBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cndao = new congNhanDAO();
+				modelquanLyCongNhan.getDataVector().removeAllElements();
+				int i=1;
+				for (CongNhan cn : cndao.getAllcongNhan()) {
+					Object []obj= {i,cn.getMaCongNhan(),cn.getTencongNhan(),cn.getNgaysinh(),cn.getNgaybatdaulamviec(),cn.getSodienthoai(),cn.getDiachi(),cn.getCmnd(),cn.getTroCap(),cn.getTrangthai(),cn.getBhxh(),cn.getHinhanhnhanvien(),cn.getGioitinh()};
+					i++;
+					modelquanLyCongNhan.addRow(obj);
+					
+				}
+				
+				
+				 
 			}
 		});
 		lammoiqlcnBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
@@ -511,7 +525,78 @@ public class TabCongNhan extends JPanel  {
 		FixButton suaqlcnbtn = new FixButton("Sửa");
 		suaqlcnbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				
+			 
+					int row=tableQuanLyCongNhan.getSelectedRow();
+								
+								if(row>=0) {
+									String ma  = macn.getText().toString();
+									String tenNV = tencn.getText().toString();
+									String sdt = sdtcn.getText().toString();
+								
+									String diachi = diachicn.getText().toString();
+//									 
+									
+									 
+									 
+									
+
+									CongNhan nv= new CongNhan( tenNV,   diachi ,sdt,ma );
+									System.out.println(nv.toString());
+						 
+									
+									 JOptionPane optionPane = new JOptionPane(this, JOptionPane.PLAIN_MESSAGE, JOptionPane.YES_NO_OPTION);
+			                            JDialog dialog = optionPane.createDialog("Bạn có chắc muốn thay đổi thông tin của nhân viên này !!");
+			                            dialog.setVisible(true);
+
+			                            // Kiểm tra xem người dùng đã đóng hộp thoại
+			                            if (optionPane.getValue() != null && (int) optionPane.getValue() == JOptionPane.YES_OPTION) {
+			                            	cndao.update(nv);
+			                            	
+//			                            	blnv.updateHeSoLuong(hslnv1, maNV);
+			                            	
+//			                            table.setValueAt(manv.getText(), row, 1);
+			                            	tableQuanLyCongNhan.setValueAt(tencn.getText(), row, 2);
+//										table.setValueAt(txtcmnd.getText(), row, 3);
+//										table.setValueAt(comboBoxChucvunv.getSelectedItem(), row, 4);
+//										table.setValueAt(trangthainv.getSelectedItem(), row, 10);
+			                            	tableQuanLyCongNhan.setValueAt(sdtcn.getText(), row, 5);
+			                            	tableQuanLyCongNhan.setValueAt(diachicn.getText(), row, 6);
+//										table.setValueAt(emailnv.getText(), row, 7);
+//										table.setValueAt(hslnv.getSelectedItem(), row, 8);
+//										table.setValueAt(cmndnv.getText(), row, 9);
+										JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thành công!!");
+//									 
+			                            }
+									
+//									if() {
+//										
+////										table.setValueAt(manv.getText(), row, 1);
+////										table.setValueAt(tennv.getText(), row, 2);
+//////										table.setValueAt(txtcmnd.getText(), row, 3);
+////										table.setValueAt(comboBoxChucvunv.getSelectedItem(), row, 4);
+////										
+////										table.setValueAt(sdtnv.getText(), row, 5);
+////										table.setValueAt(diachinv.getText(), row, 6);
+////										table.setValueAt(emailnv.getText(), row, 7);
+////										table.setValueAt(hslnv.getSelectedItem(), row, 8);
+////										
+////										
+////										java.sql.Date sqlDatengaynhaphpngsua = java.sql.Date.valueOf(strDatevaolam);
+////										table.setValueAt(sqlDatengaynhaphpngsua, row, 5);
+//////										String strsuadatenhanphong = dateFormat.format(datengaysinh);
+////										java.sql.Date sqlDatengaysinhsua = java.sql.Date.valueOf(strDatengaysinh);
+////										table.setValueAt(sqlDatengaysinhsua,row,6);
+//////										table.setValueAt(txthovaten, row, 8);
+//////										table.setValueAt(txthovaten, row, 9);
+//										
+//										
+////									}
+////								}
+						 	}
+						 
+				}
+		 
 		});
 		suaqlcnbtn.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/edit (1).png")));
 		suaqlcnbtn.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -530,15 +615,36 @@ public class TabCongNhan extends JPanel  {
 		huyqlcnbtn.setBounds(1108, 42, 150, 40);
 		panel_2.add(huyqlcnbtn);
 		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton timcongnhantheoMa = new JButton("");
+		timcongnhantheoMa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				 List<CongNhan> timtheoma=cndao.getAllCongNhanTheoma(textField_6.getText());
+					int i=1;
+					modelquanLyCongNhan.getDataVector().removeAllElements();
+					 
+					 
+					for (CongNhan cn : timtheoma) {
+						Object []obj= {i,cn.getMaCongNhan(),cn.getTencongNhan(),cn.getNgaysinh(),cn.getNgaybatdaulamviec(),cn.getSodienthoai(),cn.getDiachi(),cn.getCmnd(),cn.getTroCap(),cn.getTrangthai(),cn.getBhxh(),cn.getHinhanhnhanvien(),cn.getGioitinh()};
+						i++;
+						modelquanLyCongNhan.addRow(obj);
+						
+					}
+					tableQuanLyCongNhan.setModel(modelquanLyCongNhan);
+					
+					int rowCount = modelquanLyCongNhan.getRowCount();
+					System.out.println("so dong loc bang :"+rowCount+"");
+					if(rowCount==0) {
+						JOptionPane.showMessageDialog(null, "Error: Không tìm thấy nhân viên có tên "+textField_6.getText());
+					}
+				
 			}
 		});
-		btnNewButton_1.setBackground(new Color(97, 218, 193));
-		btnNewButton_1.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
-		btnNewButton_1.setBounds(276, 40, 57, 40);
-		panel_2.add(btnNewButton_1);
+		timcongnhantheoMa.setBackground(new Color(97, 218, 193));
+		timcongnhantheoMa.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
+		timcongnhantheoMa.setBounds(276, 40, 57, 40);
+		panel_2.add(timcongnhantheoMa);
 		
 //		nút thêm công nhân
 		FixButton fxbtnThm = new FixButton("Thêm");

@@ -1,4 +1,4 @@
-package GiaoDien;
+		package GiaoDien;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import java.awt.Button;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -27,6 +28,8 @@ import com.toedter.calendar.JDateChooser;
 import Dao.BangLuongNhanVienDAO;
 import Dao.ChamCongNhanVienDAO;
 import Dao.nhanVienDAO;
+import Dao.test1;
+import Dao.test1.QRCodeListener;
 import Entity.BangLuongCongNhan;
 import Entity.BangLuongNhanVien;
 import Entity.ChamCongNhanVien;
@@ -45,6 +48,7 @@ import org.apache.poi.ss.usermodel.CellType;
 //import org.apache.poi.xssf.usermodel.XSSFRow;
 //import org.apache.poi.xssf.usermodel.XSSFSheet;
 //import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.opencv.core.Core;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -92,7 +96,7 @@ import javax.swing.border.EtchedBorder;
 import java.sql.Statement;
 import java.util.Timer;
 import java.util.TimerTask;
-public class TabNhanVien extends JPanel{
+public class TabNhanVien extends JPanel implements QRCodeListener{
 	private JTextField tennv;
 	private JTextField manv;
 	private JTextField sdtnv;
@@ -113,9 +117,9 @@ private JTable tableluongnhanvien;
 	private DefaultTableModel modelbangchamcongtheoma;
 	private DefaultTableModel modelbangluong;
 	private String linkHinh="";
-	
+	private ChamCongNhanVienDAO ccnv;
 //	JTable bangchamcongtheoma;
-	
+	private String previousQRCode = "";
 	private nhanVienDAO nvdao= new nhanVienDAO();
 	private JTextField textField;
 	private JTextField textField_1;
@@ -125,7 +129,12 @@ private JTable tableluongnhanvien;
 	public TabNhanVien() {
 		setLayout(null);
 		Database.ConnectDB.getInstance().connect();
-		
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+     
+        test1 scanner = new test1();
+        scanner.addQRCodeListener(this);
+        scanner.startCamera();
+       
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 1381, 765);
@@ -370,7 +379,7 @@ private JTable tableluongnhanvien;
 		panel_2.setBounds(10, 625, 1365, 101);
 		panelQuanLyNhanVien.add(panel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm theo tên");
+		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm theo mã");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(20, 27, 162, 14);
@@ -1212,6 +1221,8 @@ table.addMouseListener(new MouseListener() {
 			modelchamcong.addColumn("Có phép / Không phép");
 			modelchamcong.addColumn("Số giờ tăng ca");
 			modelchamcong.addColumn("Ghi Chú");
+			modelchamcong.addColumn("Thời gian đến");
+			modelchamcong.addColumn("Thời gian đi");
 
        JTable tableChamcong = new JTable(modelchamcong) {
            @Override
@@ -1365,7 +1376,7 @@ table.addMouseListener(new MouseListener() {
 				    codilam = null;
 				    nghilam = null;
 				}
-				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu()};
+				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi()};
 				i1++;
 				modelchamcong.addRow(obj);
 				System.out.println(nv.getNV().getTenNV());
@@ -1670,7 +1681,7 @@ table.addMouseListener(new MouseListener() {
 							String luongtangca = String.format("%.0f", nv.getLuongtangca());
 //							String luongsanpham = String.format("%.0f", nv.getLuongsanpham());
 							String tongluong = String.format("%.0f", nv.getTongluong());
-							Object []obj= {nv.getMaBangLuongNhanVien(),nv.getNV().getMaNV(),nv.getSongaycong(),nv.getSoGiotangca(),nv.getLuongcb(),nv.getLuongtangca(),nv.getTroCap(),nv.getPhat(),nv.getTongluong()};
+							Object []obj= {nv.getMaBangLuongNhanVien(),nv.getNV().getMaNV(),nv.getSongaycong(),nv.getSoGiotangca(),nv.getTiencong(),nv.getLuongtangca(),nv.getTroCap(),nv.getPhat(),nv.getTongluong()};
 							 
 							modelbangluong.addRow(obj);
 
@@ -1928,9 +1939,9 @@ table.addMouseListener(new MouseListener() {
 					    //
 					     
 					}
-				 
+					loadtbl();
 					JOptionPane.showMessageDialog(null, "Cham cong thanh cong");
-					 
+					
 				}
 				
 			});
@@ -2336,10 +2347,45 @@ table.addMouseListener(new MouseListener() {
 			    codilam = null;
 			    nghilam = null;
 			}
-			Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu()};
+			Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi()};
 			i1++;
 			modelchamcong.addRow(obj);
 			
 		}
     }
+
+	@Override
+	public void onQRCodeRead(String qrCode) {
+		// TODO Auto-generated method stub
+//		if (!qrCode.equals(previousQRCode)) {
+//	        // Mã QR lần này khác với lần trước, thực hiện xử lý
+//	        // ...
+//	        
+//	        // Lưu giá trị mã QR hiện tại làm giá trị lần quét trước
+//	        previousQRCode = qrCode;
+//	    } else {
+//	        // Mã QR lần này giống với lần trước, không thực hiện xử lý
+//	    }
+		
+		LocalDate locallaythangnamhientai = LocalDate.now();
+        ccnv=new ChamCongNhanVienDAO();
+        List<ChamCongNhanVien> list= ccnv.getchamcongdahiendien(locallaythangnamhientai);    
+        int a=0;
+        for (ChamCongNhanVien chamCongNhanVien : list) {
+        	if(qrCode.equals(chamCongNhanVien.getNV().getMaNV())&&chamCongNhanVien.getThoigianden()!=null&&chamCongNhanVien.getThoigiandi()==null) {
+        		a=1;
+        	}else if(qrCode.equals(chamCongNhanVien.getNV().getMaNV())&&chamCongNhanVien.getThoigianden()!=null&&chamCongNhanVien.getThoigiandi()!=null){
+        		a=2;
+        	}
+		}
+        if(a==0) {
+        	ccnv.updateChamCong1(2, qrCode, locallaythangnamhientai);
+      		 System.out.println("Điểm danh thành công");
+        }else if(a==1){
+        	ccnv.updateChamCong2(qrCode, locallaythangnamhientai);
+        	ccnv.updatecalamvaghichu(qrCode);
+        	System.out.println("Ra về thành công");
+        }
+        loadtbl();
+	}
 }

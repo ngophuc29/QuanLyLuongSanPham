@@ -1,6 +1,8 @@
 package Entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ChamCongNhanVien {
 	private String maChamCongNhanVien;
@@ -10,6 +12,12 @@ public class ChamCongNhanVien {
 	private String caLam;
 	private String ghiChu;
 	private int sogioTangca;
+	
+	private LocalTime thoigianden;
+	private LocalTime thoigiandi;
+	
+	
+	
 	public ChamCongNhanVien(String maChamCongNhanVien, NhanVien nV, LocalDate ngayCham, int hiendien, String caLam,String ghiChu, int sogioTangca) {
 		super();
 		this.maChamCongNhanVien = maChamCongNhanVien;
@@ -21,11 +29,29 @@ public class ChamCongNhanVien {
 		this.sogioTangca = sogioTangca;
 	}
 	
+	// co them thoi gian den va thoi gian di
+	
+	
+	
 	 public ChamCongNhanVien(NhanVien nV) {
 		super();
 		this.NV = nV;
 	}
  
+	public ChamCongNhanVien(String maChamCongNhanVien, NhanVien nV, LocalDate ngayCham, int hiendien, String caLam,
+			String ghiChu, int sogioTangca, LocalTime thoigianden, LocalTime thoigiandi) {
+		super();
+		this.maChamCongNhanVien = maChamCongNhanVien;
+		NV = nV;
+		this.ngayCham = ngayCham;
+		this.hiendien = hiendien;
+		this.caLam = caLam;
+		this.ghiChu = ghiChu;
+		this.sogioTangca = sogioTangca;
+		this.thoigianden = thoigianden;
+		this.thoigiandi = thoigiandi;
+	}
+
 	public ChamCongNhanVien(String maChamCongNhanVien) {
 		super();
 		this.maChamCongNhanVien = maChamCongNhanVien;
@@ -73,6 +99,24 @@ public class ChamCongNhanVien {
 	public void setSogioTangca(int sogioTangca) {
 		this.sogioTangca = sogioTangca;
 	}
+	
+	
+	public LocalTime getThoigianden() {
+		return thoigianden;
+	}
+
+	public void setThoigianden(LocalTime thoigianden) {
+		this.thoigianden = thoigianden;
+	}
+
+	public LocalTime getThoigiandi() {
+		return thoigiandi;
+	}
+
+	public void setThoigiandi(LocalTime thoigiandi) {
+		this.thoigiandi = thoigiandi;
+	}
+
 	@Override
 	public String toString() {
 		return "ChamCongNhanVien [maChamCongNhanVien=" + maChamCongNhanVien + ", NV=" + NV + ", ngayCham=" + ngayCham
