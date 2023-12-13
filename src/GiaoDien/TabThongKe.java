@@ -95,8 +95,7 @@ public class TabThongKe extends JPanel {
 		lammoibangthongke.setBackground(new Color(69, 129, 142));
 		lammoibangthongke.setBounds(546, 282, 277, 40);
 		panel.add(lammoibangthongke);
-		
-		FixButton btnlammoithongkeluong = new FixButton("Làm Mới");
+FixButton btnlammoithongkeluong = new FixButton("Làm Mới");
 		btnlammoithongkeluong.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/reload (1).png")));
 		btnlammoithongkeluong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -262,7 +261,7 @@ public class TabThongKe extends JPanel {
 						  List<BangLuongNhanVien> locbangluong=tkdao.getthongkeluongnhanvien(thang,nam);
 							int i=1;
 							modelthongkeluongnhanvien.getDataVector().removeAllElements();
-							for (BangLuongNhanVien nv : locbangluong) {
+for (BangLuongNhanVien nv : locbangluong) {
 								Object []obj= {i,nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getTongluong() };
 								i++;
 								modelthongkeluongnhanvien.addRow(obj);
@@ -351,7 +350,7 @@ public class TabThongKe extends JPanel {
 		FixButton locthongkesanpham = new FixButton("Lọc");
 	
 		locthongkesanpham.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
-		locthongkesanpham.setFont(new Font("Tahoma", Font.BOLD, 14));
+locthongkesanpham.setFont(new Font("Tahoma", Font.BOLD, 14));
 		locthongkesanpham.setForeground(Color.WHITE);
 		locthongkesanpham.setBackground(new Color(69, 129, 142));
 		locthongkesanpham.setBounds(651, 218, 150, 40);
@@ -433,13 +432,7 @@ public class TabThongKe extends JPanel {
 		namthongKesanpham.addItem("2025");
 		namthongKesanpham.addItem("2026");
 		namthongke.addItem("2027");
-		
-		
- 
-		
-		  
-
-	        // Đặt giá trị mặc định cho `JComboBox` là năm hiện tại
+// Đặt giá trị mặc định cho `JComboBox` là năm hiện tại
 		 namthongKesanpham.setSelectedItem(String.valueOf(namHienTai));
 		
 		JPanel panel_1_2_1_1 = new JPanel();
@@ -504,7 +497,7 @@ public class TabThongKe extends JPanel {
 			}
 		});
 		locthongkecongnhan.setText("Lọc thống kê công nhân");
-		locthongkecongnhan.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
+locthongkecongnhan.setIcon(new ImageIcon(TabThongKe.class.getResource("/image/search.png")));
 		locthongkecongnhan.setForeground(Color.WHITE);
 		locthongkecongnhan.setFont(new Font("Tahoma", Font.BOLD, 14));
 		locthongkecongnhan.setBackground(new Color(69, 129, 142));
@@ -570,7 +563,7 @@ public class TabThongKe extends JPanel {
 							 Object []obj= {"","","",""};
 							 
 							 modelthongkesanpham.addRow(obj);
-							if (modelthongkesanpham.getRowCount() > 0) {
+if (modelthongkesanpham.getRowCount() > 0) {
 								modelthongkesanpham.removeRow(0);
 							}
 						}

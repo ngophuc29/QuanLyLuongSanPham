@@ -93,7 +93,7 @@ public class thongkeDAO {
         try {
            
             String sql = "SELECT CONCAT(FORMAT(SUM(tongluong), 'N0'), ' VNĐ')  \r\n"
-            		+ "FROM (\r\n"
++ "FROM (\r\n"
             		+ "SELECT tongluong\r\n"
             		+ "FROM BangLuongNhanVien\r\n"
             		+ "WHERE thang = ? AND nam = ?\r\n"
@@ -168,7 +168,7 @@ public class thongkeDAO {
 	
 	public int tongsanphamhoanthanh (int thang,int nam) {
 		ConnectDB.getInstance();
-		Connection con =ConnectDB.getConnection();
+Connection con =ConnectDB.getConnection();
 		PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int p=0;
@@ -250,7 +250,7 @@ public class thongkeDAO {
 		ConnectDB.getInstance();
 		Connection con =ConnectDB.getConnection();
 		try {
-			String sql="SELECT NhanVien.maNV ,tenNV,tongluong from BangLuongNhanVien\r\n"
+String sql="SELECT NhanVien.maNV ,tenNV,tongluong from BangLuongNhanVien\r\n"
 					+ "			join NhanVien on NhanVien.maNV=BangLuongNhanVien.maNV\r\n"
 					+ "			where  thang=? and nam=? order by tongluong desc ";
 			PreparedStatement statement= con.prepareStatement(sql);
@@ -336,4 +336,3 @@ public class thongkeDAO {
 	}
 	
 }
- 
