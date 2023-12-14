@@ -97,13 +97,8 @@ public class DangNhap extends JFrame {
 		
 		JButton btnDangNhap = new FixButton("Đăng Nhập");
 		btnDangNhap.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDangNhap.setBounds(678, 375, 217, 49);
+		btnDangNhap.setBounds(678, 390, 468, 71);
 		contentPane.add(btnDangNhap);
-		
-		JButton btnQunMtKhu = new FixButton("Quên Mật Khẩu");
-		btnQunMtKhu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnQunMtKhu.setBounds(939, 375, 217, 49);
-		contentPane.add(btnQunMtKhu);
 		
 		
 		

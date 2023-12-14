@@ -29,7 +29,11 @@ import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 
 public class UiChinh2 extends JFrame {
@@ -90,6 +94,22 @@ public class UiChinh2 extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Hỗ Trợ");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+//				private static void openHTMLFile() {
+					String filePath = "troGiup/7_ApplicationDevelopment_UserManual.pdf";
+					try {
+			            File file = new File(filePath);
+			            URI uri = file.toURI();
+			            Desktop desktop = Desktop.getDesktop();
+			            desktop.browse(uri);
+			        } catch (IOException e1) {
+			            e1.printStackTrace();
+			        }
+//				}
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
         
         JPanel mainPanel = new JPanel();

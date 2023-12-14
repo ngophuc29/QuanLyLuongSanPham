@@ -81,6 +81,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -121,8 +122,6 @@ private JTable tableluongnhanvien;
 //	JTable bangchamcongtheoma;
 	private String previousQRCode = "";
 	private nhanVienDAO nvdao= new nhanVienDAO();
-	private JTextField textField;
-	private JTextField textField_1;
 	/**
 	 * Create the panel.
 	 */
@@ -1223,7 +1222,9 @@ table.addMouseListener(new MouseListener() {
 			modelchamcong.addColumn("Ghi Chú");
 			modelchamcong.addColumn("Thời gian đến");
 			modelchamcong.addColumn("Thời gian đi");
-
+			modelchamcong.addColumn("Đi trễ");
+			
+			
        JTable tableChamcong = new JTable(modelchamcong) {
            @Override
            public Class<?> getColumnClass(int column) {
@@ -1233,16 +1234,20 @@ table.addMouseListener(new MouseListener() {
                if (column == 6) {
                    return Boolean.class; // Đặt kiểu dữ liệu cho cột Select là Boolean
                }
+               if (column == 11) {
+                   return Boolean.class; // Đặt kiểu dữ liệu cho cột Select là Boolean
+               }
 
                return super.getColumnClass(column);
            }
        };
        JCheckBox hiendien= new JCheckBox();
        JCheckBox cophepkhongphep= new JCheckBox();
+       JCheckBox ditre= new JCheckBox();
        // Đặt kiểu dữ liệu cho cột Select
        tableChamcong.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(hiendien));
        tableChamcong.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(cophepkhongphep));
-    
+       tableChamcong.getColumnModel().getColumn(11).setCellEditor(new DefaultCellEditor(ditre));
       
        
        
@@ -1287,6 +1292,7 @@ table.addMouseListener(new MouseListener() {
        tableChamcong.getColumnModel().getColumn( 5).setCellRenderer(centerRenderer);
        tableChamcong.getColumnModel().getColumn( 7).setCellRenderer(centerRenderer);
        tableChamcong.getColumnModel().getColumn( 8).setCellRenderer(centerRenderer);
+//       tableChamcong.getColumnModel().getColumn(11).setCellRenderer(centerRenderer);
 //       table.getColumnModel().getColumn( 0).setCellRenderer(centerRenderer);
        
        //ẩn cột số giờ tăng ca
@@ -1365,7 +1371,7 @@ table.addMouseListener(new MouseListener() {
 //				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham()};
 				Boolean codilam = null;
 				Boolean nghilam = null;
-
+				Boolean coditre = null;
 				if (nv.getHiendien() == 2) {
 				    codilam = true;
 				    nghilam = null;
@@ -1376,7 +1382,14 @@ table.addMouseListener(new MouseListener() {
 				    codilam = null;
 				    nghilam = null;
 				}
-				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi()};
+				
+				if(nv.getDitre()==1) {
+					coditre=true;
+				}
+				else {
+					coditre=null;
+				}
+				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi(),coditre};
 				i1++;
 				modelchamcong.addRow(obj);
 				System.out.println(nv.getNV().getTenNV());
@@ -1397,22 +1410,6 @@ table.addMouseListener(new MouseListener() {
 				btnchamCongNhanVien.setBackground(new Color(31, 184, 84));
 				btnchamCongNhanVien.setBounds(489, 599, 206, 55);
 				panel_1.add(btnchamCongNhanVien);
-				
-				textField = new JTextField();
-				textField.setBounds(54, 630, 191, 24);
-				panel_1.add(textField);
-				textField.setColumns(10);
-				
-				JLabel lblNewLabel_4 = new JLabel("Tìm kiếm theo tên:");
-				lblNewLabel_4.setForeground(new Color(255, 255, 255));
-				lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 16));
-				lblNewLabel_4.setBounds(54, 599, 222, 20);
-				panel_1.add(lblNewLabel_4);
-				
-				JButton btnNewButton_2 = new JButton("");
-				btnNewButton_2.setIcon(new ImageIcon(TabNhanVien.class.getResource("/image/search.png")));
-				btnNewButton_2.setBounds(264, 614, 57, 40);
-				panel_1.add(btnNewButton_2);
 				
 				JComboBox thangLuongNhanVien = new JComboBox();
 				JComboBox namLuongNhanVien = new JComboBox();
@@ -1630,22 +1627,6 @@ table.addMouseListener(new MouseListener() {
 		namLuongNhanVien.addItem("2026");
 		namLuongNhanVien.addItem("2027");
 		
-		JLabel lblNewLabel_4_1 = new JLabel("Tìm kiếm theo tên:");
-		lblNewLabel_4_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_4_1.setBounds(35, 615, 222, 20);
-		panel_3.add(lblNewLabel_4_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(33, 646, 191, 24);
-		panel_3.add(textField_1);
-		
-		JButton btnNewButton_2_1 = new JButton("");
-		btnNewButton_2_1.setIcon(new ImageIcon(TabNhanVien.class.getResource("/image/search.png")));
-		btnNewButton_2_1.setBounds(254, 634, 57, 40);
-		panel_3.add(btnNewButton_2_1);
-		
 		FixButton fxbtnTnhLng = new FixButton("Lọc");
 		fxbtnTnhLng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1693,7 +1674,7 @@ table.addMouseListener(new MouseListener() {
 		fxbtnTnhLng.setForeground(Color.WHITE);
 		fxbtnTnhLng.setFont(new Font("Tahoma", Font.BOLD, 18));
 		fxbtnTnhLng.setBackground(new Color(69, 129, 142));
-		fxbtnTnhLng.setBounds(1160, 615, 206, 55);
+		fxbtnTnhLng.setBounds(1160, 615, 181, 55);
 		panel_3.add(fxbtnTnhLng);
 		
 		FixButton fxbtnInPdf = new FixButton("Lọc");
@@ -1912,9 +1893,50 @@ table.addMouseListener(new MouseListener() {
 					    String ghichu =(String) modelchamcong.getValueAt(row, 8);
 					    //
 					    
+//					    LocalTime thoigianden=(LocalTime) modelchamcong.getValueAt(row, 9);
+					 // Đặt giá trị mặc định cho thoigianden và thoigiandi
+					    LocalTime thoigianden = null;
+					    LocalTime thoigiandi = null;
+
+					    // Lấy giá trị từ bảng (TableModel)
+					    Object valueThoigianden = modelchamcong.getValueAt(row, 9);
+					    Object valueThoigiandi = modelchamcong.getValueAt(row, 10);
+
+					    // Kiểm tra và chuyển đổi giá trị thành LocalTime nếu không rỗng hoặc chỉ chứa khoảng trắng
+					    if (valueThoigianden instanceof LocalTime) {
+					        thoigianden = (LocalTime) valueThoigianden;
+					    } else if (valueThoigianden instanceof String && !((String) valueThoigianden).trim().isEmpty()) {
+					        thoigianden = LocalTime.parse((String) valueThoigianden);
+					    }
+
+					    if (valueThoigiandi instanceof LocalTime) {
+					        thoigiandi = (LocalTime) valueThoigiandi;
+					    } else if (valueThoigiandi instanceof String && !((String) valueThoigiandi).trim().isEmpty()) {
+					        thoigiandi = LocalTime.parse((String) valueThoigiandi);
+					    }
+
+					    // Kiểm tra nếu chuỗi là rỗng hoặc chỉ chứa khoảng trắng, gán là null
+					    if (thoigianden != null && ((String) valueThoigianden).trim().isEmpty()) {
+					        thoigianden = null;
+					    }
+
+					    if (thoigiandi != null && ((String) valueThoigiandi).trim().isEmpty()) {
+					        thoigiandi = null;
+					    }
+
+
+					    
+					    Boolean ditre = (Boolean) modelchamcong.getValueAt(row, 11);
+					    int ditreso=0;
+					    if(ditre==null) {
+					    	ditreso=0;
+					    }else if(ditre==true){
+					    	ditreso=1;
+					    }
+					    
 					    
 					    // Gọi hàm update với các giá trị lấy được
-					    ccnvdao.updateChamCong( hiendien, calam, ghichu,sogiotangca, maChamCong,localDatengaycham);
+					    ccnvdao.updateChamCong( hiendien, calam, ghichu,sogiotangca, thoigianden,thoigiandi,ditreso,maChamCong,localDatengaycham);
 					    
 					    blnv.updateBangLuong( modelchamcong.getValueAt(row, 1).toString());
 					    
@@ -1968,7 +1990,7 @@ table.addMouseListener(new MouseListener() {
 	                	modelbangchamcongtheoma.addColumn("Có phép / Không phép");
 	                	modelbangchamcongtheoma.addColumn("Lương trong ngày");
 	                	modelbangchamcongtheoma.addColumn("Ghi Chú");
-
+	                	modelbangchamcongtheoma.addColumn("Đi trễ");
 	                   JTable bangchamcongtheoma = new JTable(modelbangchamcongtheoma) {
 	                       @Override
 	                       public Class<?> getColumnClass(int column) {
@@ -1979,15 +2001,20 @@ table.addMouseListener(new MouseListener() {
 	                               return Boolean.class; // Đặt kiểu dữ liệu cho cột Select là Boolean
 	                           }
 
+	                           if (column == 9) {
+	                               return Boolean.class; // Đặt kiểu dữ liệu cho cột Select là Boolean
+	                           }
 	                           return super.getColumnClass(column);
 	                       }
 	                   };
 	                   JCheckBox hiendien= new JCheckBox();
 	                   JCheckBox cophepkhongphep= new JCheckBox();
+	                   JCheckBox ditre= new JCheckBox();
 	                   // Đặt kiểu dữ liệu cho cột Select
 	                   bangchamcongtheoma.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(hiendien));
 	                   bangchamcongtheoma.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(cophepkhongphep));
-	                
+	                   bangchamcongtheoma.getColumnModel().getColumn(9).setCellEditor(new DefaultCellEditor(ditre));
+	                   
 	                   hiendien.addActionListener(new ActionListener() {
 	                       @Override
 	                       public void actionPerformed(ActionEvent e) {
@@ -2066,7 +2093,7 @@ table.addMouseListener(new MouseListener() {
 	                    if (selectedRow >= 0) {
 	                    	 
 	                            // Tạo JTable mới với 9 cột
-	                            String[] newColumnNames = {"Mã Chấm Công", "Mã NV", "Họ Tên", "Ngày Chấm", "Hiện diện", "Ca Làm", "Có phép / không phép",  "Lương trong ngày","Ghi Chú",};
+	                            String[] newColumnNames = {"Mã Chấm Công", "Mã NV", "Họ Tên", "Ngày Chấm", "Hiện diện", "Ca Làm", "Có phép / không phép",  "Lương trong ngày","Ghi Chú","Di tre"};
 	                         
 	                            
 	                            
@@ -2081,6 +2108,7 @@ table.addMouseListener(new MouseListener() {
 //	                				Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham()};
 	                				boolean codilam=true;
 	                				boolean nghilam=true;
+	                				Boolean coditre = null;
 	                				if(nv.getHiendien()==2) {
 	                					 codilam=true;
 	                					 nghilam=false;
@@ -2093,7 +2121,24 @@ table.addMouseListener(new MouseListener() {
 	                					codilam=false;
 	                					 nghilam=false;
 	                				}
-	                				Object []newData= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,   nv.getGhiChu()};
+	                				
+	                				if(nv.getDitre()==1) {
+	                					coditre=true;
+	                				}
+	                				else {
+	                					coditre=null;
+	                				}
+	                				String luongngay="";
+	                				if(nv.getGhiChu()!="") {
+	                					
+	                					luongngay="";
+	                				}
+	                				else {
+	                					luongngay=4500000/26+"";
+	                				}
+	                				
+	                				
+	                				Object []newData= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,luongngay,nv.getGhiChu(),coditre};
 	                				i1++;
 	                				 modelbangchamcongtheoma.addRow(newData);
 	                				System.out.println(nv.getNV().getTenNV());
@@ -2336,7 +2381,8 @@ table.addMouseListener(new MouseListener() {
 //			Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham()};
 			Boolean codilam = null;
 			Boolean nghilam = null;
-
+			Boolean coditre=null;
+			
 			if (nv.getHiendien() == 2) {
 			    codilam = true;
 			    nghilam = null;
@@ -2347,7 +2393,14 @@ table.addMouseListener(new MouseListener() {
 			    codilam = null;
 			    nghilam = null;
 			}
-			Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi()};
+			
+			if(nv.getDitre()==1) {
+				coditre=true;
+			}
+			else {
+				coditre=null;
+			}
+			Object []obj= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,nv.getSogioTangca(),nv.getGhiChu(),nv.getThoigianden(),nv.getThoigiandi(),coditre};
 			i1++;
 			modelchamcong.addRow(obj);
 			
@@ -2380,6 +2433,7 @@ table.addMouseListener(new MouseListener() {
 		}
         if(a==0) {
         	ccnv.updateChamCong1(2, qrCode, locallaythangnamhientai);
+        	ccnv.updateditre(qrCode);
       		 System.out.println("Điểm danh thành công");
         }else if(a==1){
         	ccnv.updateChamCong2(qrCode, locallaythangnamhientai);

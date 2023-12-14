@@ -16,9 +16,10 @@ public class ChamCongNhanVien {
 	private LocalTime thoigianden;
 	private LocalTime thoigiandi;
 	
+	private int ditre;
 	
 	
-	public ChamCongNhanVien(String maChamCongNhanVien, NhanVien nV, LocalDate ngayCham, int hiendien, String caLam,String ghiChu, int sogioTangca) {
+	public ChamCongNhanVien(String maChamCongNhanVien, NhanVien nV, LocalDate ngayCham, int hiendien, String caLam,String ghiChu, int sogioTangca,int ditre) {
 		super();
 		this.maChamCongNhanVien = maChamCongNhanVien;
 		this.NV = nV;
@@ -27,6 +28,7 @@ public class ChamCongNhanVien {
 		this.caLam = caLam;
 		this.ghiChu = ghiChu;
 		this.sogioTangca = sogioTangca;
+		this.ditre=ditre;
 	}
 	
 	// co them thoi gian den va thoi gian di
@@ -55,6 +57,23 @@ public class ChamCongNhanVien {
 	public ChamCongNhanVien(String maChamCongNhanVien) {
 		super();
 		this.maChamCongNhanVien = maChamCongNhanVien;
+	}
+
+	
+	
+	public ChamCongNhanVien(String maChamCongNhanVien, NhanVien nV, LocalDate ngayCham, int hiendien, String caLam,
+			String ghiChu, int sogioTangca, LocalTime thoigianden, LocalTime thoigiandi, int ditre) {
+		super();
+		this.maChamCongNhanVien = maChamCongNhanVien;
+		NV = nV;
+		this.ngayCham = ngayCham;
+		this.hiendien = hiendien;
+		this.caLam = caLam;
+		this.ghiChu = ghiChu;
+		this.sogioTangca = sogioTangca;
+		this.thoigianden = thoigianden;
+		this.thoigiandi = thoigiandi;
+		this.ditre = ditre;
 	}
 
 	public String getMaChamCongNhanVien() {
@@ -115,6 +134,14 @@ public class ChamCongNhanVien {
 
 	public void setThoigiandi(LocalTime thoigiandi) {
 		this.thoigiandi = thoigiandi;
+	}
+
+	public int getDitre() {
+		return ditre;
+	}
+
+	public void setDitre(int ditre) {
+		this.ditre = ditre;
 	}
 
 	@Override

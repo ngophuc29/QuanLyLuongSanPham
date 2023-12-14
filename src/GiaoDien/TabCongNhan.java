@@ -92,7 +92,6 @@ public class TabCongNhan extends JPanel  {
 	private JTextField cmndcn;
 	private JTextField trocapCongNhan;
 	private JTextField textField_6;
-	private JTextField textField_7;
 	private JTable table;
 	private JTable tableQuanLyCongNhan;
 	private DefaultTableModel modelquanLyCongNhan;
@@ -343,7 +342,7 @@ public class TabCongNhan extends JPanel  {
 		panel_2.setBounds(10, 620, 1322, 101);
 		panelQuanLyNhanVien.add(panel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tìm Kiếm Theo Tên");
+		JLabel lblNewLabel_1 = new JLabel("Tìm Kiếm Theo Mã");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(20, 27, 155, 14);
@@ -1503,22 +1502,6 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 					}
 				}
 			});
-			
-			JLabel lblNewLabel_4_1 = new JLabel("Tìm kiếm theo tên:");
-			lblNewLabel_4_1.setForeground(new Color(255, 255, 255));
-			lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-			lblNewLabel_4_1.setBounds(22, 606, 222, 20);
-			panel_4.add(lblNewLabel_4_1);
-			
-			textField_7 = new JTextField();
-			textField_7.setColumns(10);
-			textField_7.setBounds(20, 637, 191, 24);
-			panel_4.add(textField_7);
-			
-			JButton btnNewButton_2_1 = new JButton("");
-			btnNewButton_2_1.setIcon(new ImageIcon(TabCongNhan.class.getResource("/image/search.png")));
-			btnNewButton_2_1.setBounds(241, 625, 57, 40);
-			panel_4.add(btnNewButton_2_1);
 			
 			FixButton fxbtnTnhLng = new FixButton("Lọc");
 			
