@@ -1646,8 +1646,8 @@ tableQuanLyCongNhan.addMouseListener(new MouseListener() {
 	                        
 	                     
 	                            JLabel hello = new JLabel("Bảng Lương Nhân Viên Chi Tiết");
-	                            JLabel manv = new JLabel("Mã Nhân viên: " + ma);
-	                            JLabel tennv = new JLabel("Tên Nhân Viên: " + ten);
+	                            JLabel manv = new JLabel("Mã Công viên: " + ma);
+	                            JLabel tennv = new JLabel("Tên Công nhân: " + ten);
 	                            JLabel thang1 = new JLabel("Tháng ");
 	                            JLabel nam1 = new JLabel("Năm");
 	                            JButton yourButton = new JButton("In PDF");

@@ -128,8 +128,12 @@ private JTable tableluongnhanvien;
 	public TabNhanVien() {
 		setLayout(null);
 		Database.ConnectDB.getInstance().connect();
+		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-     
+		System.loadLibrary("opencv_java341");
+		
+//		nu.pattern.OpenCV.loadLocally();
+		
         test1 scanner = new test1();
         scanner.addQRCodeListener(this);
         scanner.startCamera();
@@ -2127,14 +2131,18 @@ table.addMouseListener(new MouseListener() {
 	                				else {
 	                					coditre=null;
 	                				}
-	                				String luongngay="";
-	                				if(nv.getGhiChu()!="") {
-	                					
-	                					luongngay="";
+	                				String luongngay = "";
+	                				if (!nv.getGhiChu().equals("")) {
+	                				    luongngay = "";
+	                				} else {
+	                				    if (codilam==true) {
+	                				        luongngay = String.valueOf(4500000 / 26);
+	                				    } else {
+	                				        luongngay = "";
+	                				    }
 	                				}
-	                				else {
-	                					luongngay=4500000/26+"";
-	                				}
+
+
 	                				
 	                				
 	                				Object []newData= {nv.getMaChamCongNhanVien(),nv.getNV().getMaNV(),nv.getNV().getTenNV(),nv.getNgayCham(),codilam,nv.getCaLam(),nghilam,luongngay,nv.getGhiChu(),coditre};
@@ -2156,58 +2164,129 @@ table.addMouseListener(new MouseListener() {
 	                		        JLabel tennv = new JLabel("Tên Nhân Viên :"+ten);
 	                		        JLabel thang1 = new JLabel("Tháng ");
 	                		        JLabel nam1 = new JLabel("Năm");
-
-	                		        // Tạo JPanel để chứa JTable mới
+	                		        JButton yourButton = new JButton("In PDF");
+	                		        
 	                		        JPanel newPanel = new JPanel(new GridBagLayout());
-	                		        GridBagConstraints gbc = new GridBagConstraints();
+		                            GridBagConstraints gbc = new GridBagConstraints();
 
-	                		        // Đặt các thành phần vào vị trí tương ứng
-	                		        gbc.gridx = 0;
-	                		        gbc.gridy = 0;
-	                		        gbc.anchor = GridBagConstraints.CENTER;
-	                		        gbc.insets = new Insets(10, 10, 10, 50); // Đặt khoảng cách giữa các thành phần
-	                		        gbc.gridwidth = 2;
-	                		        newPanel.add(hello, gbc);
+		                            // Đặt các thành phần vào vị trí tương ứng
+		                            gbc.gridx = 0;
+		                            gbc.gridy = 0;
+		                            gbc.anchor = GridBagConstraints.CENTER;
+		                            gbc.insets = new Insets(10, 10, 10, 10); // Điều chỉnh khoảng cách nếu cần thiết
+		                            gbc.gridwidth = 2;
+		                            newPanel.add(hello, gbc);
 
-	                		         
-	                		        gbc.gridy = 1;
-	                		        gbc.anchor = GridBagConstraints.WEST;
-	                		        gbc.gridwidth = 1;
-	                		        newPanel.add(manv, gbc);
+		                            gbc.gridx = 0;
+		                            gbc.gridy = 1;
+		                            gbc.anchor = GridBagConstraints.WEST;
+		                            newPanel.add(manv, gbc);
 
-	                		        gbc.gridy = 2;
-	                		        newPanel.add(tennv, gbc);
+		                            gbc.gridx = 1;
+		                            gbc.gridy = 1;
+		                            gbc.anchor = GridBagConstraints.EAST;
+		                            newPanel.add(thang1, gbc);
 
-	                		        gbc.gridx = 1;
-	                		        gbc.gridy = 1;
-	                		        gbc.anchor = GridBagConstraints.EAST;
-	                		        newPanel.add(thang1, gbc);
+		                            gbc.gridx = 0;
+		                            gbc.gridy = 2;
+		                            gbc.anchor = GridBagConstraints.WEST;
+		                            newPanel.add(tennv, gbc);
 
-	                		        gbc.gridy = 2;
-	                		        newPanel.add(nam1, gbc);
+		                            gbc.gridx = 1;
+		                            gbc.gridy = 2;
+		                            gbc.anchor = GridBagConstraints.EAST;
+		                            newPanel.add(nam1, gbc);
 
-	                		        gbc.gridx = 0;
-	                		        gbc.gridy = 3;
-	                		        gbc.gridwidth = 2;
-	                		        gbc.fill = GridBagConstraints.BOTH;
-	                		        gbc.weightx = 1.0;
-	                		        gbc.weighty = 1.0;
-	                		        newPanel.add(scroolchamcongtrongbangluong, gbc);
+		                            gbc.gridx = 1;
+		                            gbc.gridy = 0;
+		                            gbc.anchor = GridBagConstraints.NORTHEAST;
+		                            gbc.insets = new Insets(10, 10, 10, 10);
+		                            newPanel.add(yourButton, gbc);
 
-	                		        newPanel.setPreferredSize(new Dimension(1289, 461));
+		                            gbc.gridx = 0;
+		                            gbc.gridy = 3;
+		                            gbc.gridwidth = 2;
+		                            gbc.fill = GridBagConstraints.BOTH;
+		                            gbc.weightx = 1.0;
+		                            gbc.weighty = 1.0;
+		                            newPanel.add(scroolchamcongtrongbangluong, gbc);
 
-	                		        // Hiển thị panel bên trong một hộp thoại thông báo
-	                		        JOptionPane optionPane = new JOptionPane(newPanel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-	                		        JDialog dialog = optionPane.createDialog("Chấm công chi tiết");
-	                		        dialog.setVisible(true);
-	                	        
-	                	        
-	                	        
-	                            // Kiểm tra xem người dùng đã đóng hộp thoại
-	                            if (optionPane.getValue() != null && (int) optionPane.getValue() == JOptionPane.OK_OPTION) {
-	                                tableluongnhanvien.clearSelection();
-	                            }
+		                            
+		                            //in phieu chi tiet
+		                            yourButton.addActionListener(new ActionListener() {
+		                                @Override
+		                                public void actionPerformed(ActionEvent e) {
+		                                    
+		                                	String ma=(String) bangchamcongtheoma.getValueAt(0, 1);
+		                                	String ten=(String) bangchamcongtheoma.getValueAt(0, 1);
+		                                	
+		                                	int zoom = 150; // Giá trị zoom mong muốn (%)
+		                					int newWidth = (int) (bangchamcongtheoma.getWidth() * (zoom / 100.0));
+		                					int newHeight = (int) (bangchamcongtheoma.getHeight() * (zoom / 100.0));
 
+		                					bangchamcongtheoma.setPreferredScrollableViewportSize(new Dimension(newWidth, newHeight));
+
+		                					// Tiếp theo, bạn có thể tiến hành in bảng
+		                					// code in bảng ở đây
+
+		                			        // Print the table
+		                					// Create header format
+		                					String headerText = "Bảng Lương Chi tiết Nhân Viên\n" +
+		                		                    "Mã Nhân Viên: " + ma + "\n" +
+		                		                    "Tên Nhân Viên: " + ten + "\n";
+
+		                		MessageFormat headerFormat = new MessageFormat(headerText);
+
+		                		// ... The rest of your code ...
+
+		                			        // Create footer format
+		                			        MessageFormat footerFormat = new MessageFormat("Page {0}");
+
+		                			        // Set header and footer alignment
+//		                			        headerFormat.setAlignment(MessageFormat.CENTER);
+//		                			        footerFormat.setAlignment(MessageFormat.RIGHT);
+
+		                			        // Create a PrinterJob instance
+		                			        PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+		                			        // Set the printable object as the JTable
+		                			        printerJob.setPrintable(bangchamcongtheoma.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat));
+
+		                			        // Set the page format to match the screen size
+		                			        PageFormat pageFormat = printerJob.defaultPage();
+		                			        pageFormat.setOrientation(PageFormat.PORTRAIT);
+
+		                			        // Set the zoom to 100%
+		                			        
+		                			        printerJob.setPrintable(bangchamcongtheoma.getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat), pageFormat);
+		                			     
+
+		                			        // Print the table
+		                			        try {
+		                			        	
+		                			        	   printerJob.print();
+		                			        	   JOptionPane.showMessageDialog(null, "In bảng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		                			        } catch (PrinterException e1) {
+		                			            e1.printStackTrace();
+		                			        }
+		                	 
+		                                	
+		                                	
+		                                	
+		                                    
+		                                }
+		                            });
+
+		                            newPanel.setPreferredSize(new Dimension(1289, 461));
+		                         // Hiển thị panel bên trong một hộp thoại thông báo
+		                            JOptionPane optionPane = new JOptionPane(newPanel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+		                            JDialog dialog = optionPane.createDialog("Chấm công chi tiết");
+		                            dialog.setVisible(true);
+
+		                            // Kiểm tra xem người dùng đã đóng hộp thoại
+		                            if (optionPane.getValue() != null && (int) optionPane.getValue() == JOptionPane.OK_OPTION) {
+		                            	tableluongnhanvien.clearSelection();
+		                            }
 	                 // Tạo một JDialog mới và hiển thị blct bên trong nó
 	                     
 	                    

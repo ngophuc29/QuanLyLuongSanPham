@@ -54,7 +54,8 @@ public class UiChinh2 extends JFrame {
 					UiChinh2 frame = new UiChinh2();
 					frame.setVisible(true);
 					
-			       
+//			       test1 s=new test1();
+//			       s.startCamera();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

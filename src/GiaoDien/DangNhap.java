@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -55,8 +57,9 @@ public class DangNhap extends JFrame {
 	 * Create the frame.
 	 */
 	public DangNhap() throws SQLException {
-		
-		ConnectDB.getInstance().connect();
+		Image icon= new ImageIcon (this.getClass().getResource("/image/worker (1).png")).getImage(); 
+		this.setIconImage(icon);
+ 
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1211, 620);
