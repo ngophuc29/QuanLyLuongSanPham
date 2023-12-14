@@ -35,6 +35,7 @@ import java.net.URI;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Image;
 
 public class UiChinh2 extends JFrame {
 	private JPanel contentPane;
@@ -72,6 +73,10 @@ public class UiChinh2 extends JFrame {
 		setLocationRelativeTo(null);
 		 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Image icon= new ImageIcon (this.getClass().getResource("/image/worker (1).png")).getImage(); 
+		this.setIconImage(icon);
+		
 		setBounds(100, 100, 1648, 833);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(13, 152, 204));

@@ -1484,14 +1484,14 @@ table.addMouseListener(new MouseListener() {
 		lblDanhSchCng_1.setBounds(10, 319, 349, 24);
 		panel_4.add(lblDanhSchCng_1);
 		
-		FixButton lammoithemcongdoan = new FixButton("Làm mới");
-		lammoithemcongdoan.addActionListener(new ActionListener() {
+		FixButton bangsanphamphancongcongdoan = new FixButton("Làm mới");
+		bangsanphamphancongcongdoan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
 				modeldssanphamphancong.getDataVector().removeAllElements();
 				int icd1=1;
-				for (SanPham sp : spdao.getAllsanPhamDangsanxuat()) {
+				for (SanPham sp : spdao.getAllsanPhamDangDathang()) {
 					 
 					Object []obj= {icd1, sp.getMaSp(),sp.getTenSp(),sp.getGiaSP() };
 					icd1++;
@@ -1502,12 +1502,12 @@ table.addMouseListener(new MouseListener() {
 				tablesppc.setModel(modeldssanphamphancong);
 			}
 		});
-		lammoithemcongdoan.setIcon(new ImageIcon(TabSanPham.class.getResource("/image/reload (1).png")));
-		lammoithemcongdoan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lammoithemcongdoan.setForeground(Color.WHITE);
-		lammoithemcongdoan.setBackground(new Color(69, 129, 142));
-		lammoithemcongdoan.setBounds(621, 637, 150, 40);
-		panel_4.add(lammoithemcongdoan);
+		bangsanphamphancongcongdoan.setIcon(new ImageIcon(TabSanPham.class.getResource("/image/reload (1).png")));
+		bangsanphamphancongcongdoan.setFont(new Font("Tahoma", Font.BOLD, 14));
+		bangsanphamphancongcongdoan.setForeground(Color.WHITE);
+		bangsanphamphancongcongdoan.setBackground(new Color(69, 129, 142));
+		bangsanphamphancongcongdoan.setBounds(621, 637, 150, 40);
+		panel_4.add(bangsanphamphancongcongdoan);
 		
 		FixButton suacongdoanbtn = new FixButton("Sửa");
 		suacongdoanbtn.setIcon(new ImageIcon(TabSanPham.class.getResource("/image/edit (1).png")));
@@ -1624,7 +1624,7 @@ table.addMouseListener(new MouseListener() {
 					 int rowCount = modelcongdoanphancong.getRowCount();
 						System.out.println("so dong loc bang :"+rowCount+"");
 						if(rowCount==0) {
-							JOptionPane.showMessageDialog(null, "Error:San pham nay chua co cong doan vui long thêm công đoạn trước khi phân công");
+							JOptionPane.showMessageDialog(null, "Error:Loi roi");
 							modelcongdoanphancong.getDataVector().removeAllElements();
 							 Object []obj= {"","","",""};
 							 

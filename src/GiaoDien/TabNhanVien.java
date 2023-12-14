@@ -1916,14 +1916,13 @@ table.addMouseListener(new MouseListener() {
 					    }
 
 					    // Kiểm tra nếu chuỗi là rỗng hoặc chỉ chứa khoảng trắng, gán là null
-					    if (thoigianden != null && ((String) valueThoigianden).trim().isEmpty()) {
+					    if (thoigianden != null && valueThoigianden instanceof String && ((String) valueThoigianden).trim().isEmpty()) {
 					        thoigianden = null;
 					    }
 
-					    if (thoigiandi != null && ((String) valueThoigiandi).trim().isEmpty()) {
+					    if (thoigiandi != null && valueThoigiandi instanceof String && ((String) valueThoigiandi).trim().isEmpty()) {
 					        thoigiandi = null;
 					    }
-
 
 					    
 					    Boolean ditre = (Boolean) modelchamcong.getValueAt(row, 11);
